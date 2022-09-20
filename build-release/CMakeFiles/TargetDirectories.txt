@@ -1,0 +1,3 @@
+/home/slinky/CLionProjects/NotMario/build-release/CMakeFiles/NotMario.dir
+/home/slinky/CLionProjects/NotMario/build-release/CMakeFiles/edit_cache.dir
+/home/slinky/CLionProjects/NotMario/build-release/CMakeFiles/rebuild_cache.dir

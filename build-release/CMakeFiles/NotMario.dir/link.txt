@@ -1,0 +1,1 @@
+/bin/x86_64-linux-gnu-g++ -O3 -DNDEBUG CMakeFiles/NotMario.dir/main.cpp.o -o NotMario  -lsfml-system -lsfml-window -lsfml-graphics 
