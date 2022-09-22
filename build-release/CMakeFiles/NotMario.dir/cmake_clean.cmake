@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/NotMario.dir/main.cpp.o"
   "CMakeFiles/NotMario.dir/main.cpp.o.d"
+  "CMakeFiles/NotMario.dir/src/RenderManager.cpp.o"
+  "CMakeFiles/NotMario.dir/src/RenderManager.cpp.o.d"
   "NotMario"
   "NotMario.pdb"
 )
