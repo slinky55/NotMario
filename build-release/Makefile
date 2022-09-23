@@ -374,29 +374,53 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/RenderManager.o: src/RenderManager.cpp.o
-.PHONY : src/RenderManager.o
+src/Managers/RenderManager.o: src/Managers/RenderManager.cpp.o
+.PHONY : src/Managers/RenderManager.o
 
 # target to build an object file
-src/RenderManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/RenderManager.cpp.o
-.PHONY : src/RenderManager.cpp.o
+src/Managers/RenderManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o
+.PHONY : src/Managers/RenderManager.cpp.o
 
-src/RenderManager.i: src/RenderManager.cpp.i
-.PHONY : src/RenderManager.i
+src/Managers/RenderManager.i: src/Managers/RenderManager.cpp.i
+.PHONY : src/Managers/RenderManager.i
 
 # target to preprocess a source file
-src/RenderManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/RenderManager.cpp.i
-.PHONY : src/RenderManager.cpp.i
+src/Managers/RenderManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.i
+.PHONY : src/Managers/RenderManager.cpp.i
 
-src/RenderManager.s: src/RenderManager.cpp.s
-.PHONY : src/RenderManager.s
+src/Managers/RenderManager.s: src/Managers/RenderManager.cpp.s
+.PHONY : src/Managers/RenderManager.s
 
 # target to generate assembly for a file
-src/RenderManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/RenderManager.cpp.s
-.PHONY : src/RenderManager.cpp.s
+src/Managers/RenderManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.s
+.PHONY : src/Managers/RenderManager.cpp.s
+
+src/NotMario/NotMario.o: src/NotMario/NotMario.cpp.o
+.PHONY : src/NotMario/NotMario.o
+
+# target to build an object file
+src/NotMario/NotMario.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o
+.PHONY : src/NotMario/NotMario.cpp.o
+
+src/NotMario/NotMario.i: src/NotMario/NotMario.cpp.i
+.PHONY : src/NotMario/NotMario.i
+
+# target to preprocess a source file
+src/NotMario/NotMario.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.i
+.PHONY : src/NotMario/NotMario.cpp.i
+
+src/NotMario/NotMario.s: src/NotMario/NotMario.cpp.s
+.PHONY : src/NotMario/NotMario.s
+
+# target to generate assembly for a file
+src/NotMario/NotMario.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.s
+.PHONY : src/NotMario/NotMario.cpp.s
 
 # Help Target
 help:
@@ -428,9 +452,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/RenderManager.o"
-	@echo "... src/RenderManager.i"
-	@echo "... src/RenderManager.s"
+	@echo "... src/Managers/RenderManager.o"
+	@echo "... src/Managers/RenderManager.i"
+	@echo "... src/Managers/RenderManager.s"
+	@echo "... src/NotMario/NotMario.o"
+	@echo "... src/NotMario/NotMario.i"
+	@echo "... src/NotMario/NotMario.s"
 .PHONY : help
 
 

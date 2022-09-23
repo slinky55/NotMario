@@ -2184,7 +2184,10 @@
 		<Unit filename="/Users/shaft/CLionProjects/NotMario/main.cpp">
 			<Option target="NotMario"/>
 		</Unit>
-		<Unit filename="/Users/shaft/CLionProjects/NotMario/src/RenderManager.cpp">
+		<Unit filename="/Users/shaft/CLionProjects/NotMario/src/Managers/RenderManager.cpp">
+			<Option target="NotMario"/>
+		</Unit>
+		<Unit filename="/Users/shaft/CLionProjects/NotMario/src/NotMario/NotMario.cpp">
 			<Option target="NotMario"/>
 		</Unit>
 		<Unit filename="/Users/shaft/CLionProjects/NotMario/CMakeLists.txt">

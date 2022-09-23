@@ -1,8 +1,9 @@
-#include <iostream>
+#include "NotMario/NotMario.h"
 
 int main()
 {
-    std::cout << "Hello, World!\n";
+    NotMario game;
+    game.OnInit();
 
     return 0;
 }
