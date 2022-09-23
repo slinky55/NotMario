@@ -1,0 +1,8 @@
+//
+// Created by Bryant Mason on 9/23/22.
+//
+
+#ifndef NOTMARIO_RESOURCEMANAGER_H
+#define NOTMARIO_RESOURCEMANAGER_H
+
+#endif //NOTMARIO_RESOURCEMANAGER_H
