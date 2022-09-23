@@ -1,8 +1,18 @@
-//
-// Created by Bryant Mason on 9/23/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_RESOURCEMANAGER_H
-#define NOTMARIO_RESOURCEMANAGER_H
+#include <unordered_map>
+#include <string_view>
 
-#endif //NOTMARIO_RESOURCEMANAGER_H
+#include <SFML/Graphics/Texture.hpp>
+
+class ResourceManager
+{
+public:
+    ResourceManager() = default;
+
+    [[nodiscard]] bool LoadTexture(std::string_view _id, std::string_view _path);
+    sf::Texture& GetTexture(std::string_view _id);
+
+private:
+    std::unordered_map<std::string_view, sf::Texture*> m_textures;
+};

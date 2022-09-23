@@ -6,13 +6,17 @@ RenderManager::RenderManager(entt::registry& _reg,
                              m_reg(_reg),
                              m_window(_win)
 {
+}
+
+// API
+
+void RenderManager::OnInit()
+{
     m_window.create(sf::VideoMode({800, 600}), "Hello");
     assert(m_window.isOpen());
 
     // TODO: Log that render system was started
 }
-
-// API
 
 void RenderManager::Draw()
 {
