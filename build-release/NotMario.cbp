@@ -2184,6 +2184,9 @@
 		<Unit filename="/Users/shaft/CLionProjects/NotMario/main.cpp">
 			<Option target="NotMario"/>
 		</Unit>
+		<Unit filename="/Users/shaft/CLionProjects/NotMario/src/Managers/EntityManager.cpp">
+			<Option target="NotMario"/>
+		</Unit>
 		<Unit filename="/Users/shaft/CLionProjects/NotMario/src/Managers/RenderManager.cpp">
 			<Option target="NotMario"/>
 		</Unit>

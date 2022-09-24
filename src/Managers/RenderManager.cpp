@@ -23,6 +23,13 @@ void RenderManager::Draw()
     m_window.clear();
 
     // TODO: Get view of render-able entities, and call their draw method
+    auto view = m_reg.view<RenderableC>();
+
+    for (auto entity : view)
+    {
+        auto& renderable = m_reg.get<RenderableC>(entity);
+        m_window.draw(*renderable.drawable);
+    }
 
     m_window.display();
 }

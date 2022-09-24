@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/NotMario.dir/main.cpp.o"
   "CMakeFiles/NotMario.dir/main.cpp.o.d"
+  "CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o"
+  "CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o.d"
   "CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o"
   "CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o.d"
   "CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o"

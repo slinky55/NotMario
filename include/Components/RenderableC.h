@@ -1,8 +1,11 @@
-//
-// Created by Bryant Mason on 9/23/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_RENDERABLEC_H
-#define NOTMARIO_RENDERABLEC_H
+#include <memory>
 
-#endif //NOTMARIO_RENDERABLEC_H
+#include <SFML/Graphics/Drawable.hpp>
+
+struct RenderableC
+{
+    std::shared_ptr<sf::Drawable> drawable;
+};
+

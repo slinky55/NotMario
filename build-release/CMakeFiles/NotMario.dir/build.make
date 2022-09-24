@@ -83,10 +83,24 @@ CMakeFiles/NotMario.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/NotMario.dir/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shaft/CLionProjects/NotMario/main.cpp -o CMakeFiles/NotMario.dir/main.cpp.s
 
+CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o: CMakeFiles/NotMario.dir/flags.make
+CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o: ../src/Managers/EntityManager.cpp
+CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o: CMakeFiles/NotMario.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o -MF CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o.d -o CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o -c /Users/shaft/CLionProjects/NotMario/src/Managers/EntityManager.cpp
+
+CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shaft/CLionProjects/NotMario/src/Managers/EntityManager.cpp > CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.i
+
+CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shaft/CLionProjects/NotMario/src/Managers/EntityManager.cpp -o CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.s
+
 CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o: CMakeFiles/NotMario.dir/flags.make
 CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o: ../src/Managers/RenderManager.cpp
 CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o: CMakeFiles/NotMario.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o -MF CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o.d -o CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o -c /Users/shaft/CLionProjects/NotMario/src/Managers/RenderManager.cpp
 
 CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.s: cmake_force
 CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o: CMakeFiles/NotMario.dir/flags.make
 CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o: ../src/NotMario/NotMario.cpp
 CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o: CMakeFiles/NotMario.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o -MF CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o.d -o CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o -c /Users/shaft/CLionProjects/NotMario/src/NotMario/NotMario.cpp
 
 CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.i: cmake_force
@@ -114,6 +128,7 @@ CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.s: cmake_force
 # Object files for target NotMario
 NotMario_OBJECTS = \
 "CMakeFiles/NotMario.dir/main.cpp.o" \
+"CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o" \
 "CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o" \
 "CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o"
 
@@ -121,6 +136,7 @@ NotMario_OBJECTS = \
 NotMario_EXTERNAL_OBJECTS =
 
 NotMario: CMakeFiles/NotMario.dir/main.cpp.o
+NotMario: CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o
 NotMario: CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o
 NotMario: CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o
 NotMario: CMakeFiles/NotMario.dir/build.make
@@ -129,7 +145,7 @@ NotMario: 3rdparty/box2d/bin/libbox2d.2.4.1.dylib
 NotMario: 3rdparty/sfml/lib/libsfml-window.3.0.0.dylib
 NotMario: 3rdparty/sfml/lib/libsfml-system.3.0.0.dylib
 NotMario: CMakeFiles/NotMario.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable NotMario"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable NotMario"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/NotMario.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

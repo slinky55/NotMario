@@ -356,10 +356,10 @@ clean: 3rdparty/box2d/clean
 # Target rules for target CMakeFiles/NotMario.dir
 
 # All Build rule for target.
+CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/all
 CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
 CMakeFiles/NotMario.dir/all: 3rdparty/box2d/src/CMakeFiles/box2d.dir/all
-CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/all
-CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=1 "Built target NotMario"
@@ -367,7 +367,7 @@ CMakeFiles/NotMario.dir/all: 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-windo
 
 # Build rule for subdir invocation for target.
 CMakeFiles/NotMario.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 50
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 51
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/NotMario.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : CMakeFiles/NotMario.dir/rule
@@ -414,12 +414,12 @@ sfml-system: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/rule
 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/all
 	$(MAKE) $(MAKESILENT) -f 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72 "Built target sfml-window"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73 "Built target sfml-window"
 .PHONY : 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all
 
 # Build rule for subdir invocation for target.
 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 21
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/rule
@@ -463,8 +463,8 @@ sfml-network: 3rdparty/sfml/src/SFML/Network/CMakeFiles/sfml-network.dir/rule
 # Target rules for target 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir
 
 # All Build rule for target.
-3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/all
 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: 3rdparty/sfml/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: 3rdparty/sfml/src/SFML/System/CMakeFiles/sfml-system.dir/all
 	$(MAKE) $(MAKESILENT) -f 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=38,39,40,41,42,43,44,45,46,47,48 "Built target sfml-graphics"
@@ -472,7 +472,7 @@ sfml-network: 3rdparty/sfml/src/SFML/Network/CMakeFiles/sfml-network.dir/rule
 
 # Build rule for subdir invocation for target.
 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 31
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 32
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : 3rdparty/sfml/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/rule
@@ -571,12 +571,12 @@ unit_test: 3rdparty/box2d/unit-test/CMakeFiles/unit_test.dir/rule
 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/all:
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/build.make 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/build.make 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num= "Built target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=20 "Built target glad"
 .PHONY : 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/rule
@@ -597,7 +597,7 @@ glad: 3rdparty/box2d/extern/glad/CMakeFiles/glad.dir/rule
 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/all:
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/build.make 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/build.make 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=20,21,22,23,24,25 "Built target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=21,22,23,24,25,26 "Built target glfw"
 .PHONY : 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.
@@ -623,7 +623,7 @@ glfw: 3rdparty/box2d/extern/glfw/CMakeFiles/glfw.dir/rule
 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/all:
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/build.make 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/build.make 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=26,27 "Built target imgui"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=27,28 "Built target imgui"
 .PHONY : 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/all
 
 # Build rule for subdir invocation for target.
@@ -649,12 +649,12 @@ imgui: 3rdparty/box2d/extern/imgui/CMakeFiles/imgui.dir/rule
 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/all:
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/build.make 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/build.make 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=28 "Built target sajson"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num= "Built target sajson"
 .PHONY : 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/all
 
 # Build rule for subdir invocation for target.
 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/rule
@@ -679,12 +679,12 @@ sajson: 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/rule
 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/all: 3rdparty/box2d/extern/sajson/CMakeFiles/sajson.dir/all
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/build.make 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/depend
 	$(MAKE) $(MAKESILENT) -f 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/build.make 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97 "Built target testbed"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles --progress-num=74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97 "Built target testbed"
 .PHONY : 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/all
 
 # Build rule for subdir invocation for target.
 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 52
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 51
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shaft/CLionProjects/NotMario/build-release/CMakeFiles 0
 .PHONY : 3rdparty/box2d/testbed/CMakeFiles/testbed.dir/rule

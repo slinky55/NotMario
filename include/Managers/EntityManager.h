@@ -1,8 +1,13 @@
-//
-// Created by Bryant Mason on 9/23/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_ENTITYMANAGER_H
-#define NOTMARIO_ENTITYMANAGER_H
+#include <entt/entity/registry.hpp>
 
-#endif //NOTMARIO_ENTITYMANAGER_H
+class EntityManager
+{
+public:
+    EntityManager(entt::registry& _reg);
+
+    entt::entity Create();
+private:
+    entt::registry& m_reg;
+};

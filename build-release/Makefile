@@ -374,6 +374,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/Managers/EntityManager.o: src/Managers/EntityManager.cpp.o
+.PHONY : src/Managers/EntityManager.o
+
+# target to build an object file
+src/Managers/EntityManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o
+.PHONY : src/Managers/EntityManager.cpp.o
+
+src/Managers/EntityManager.i: src/Managers/EntityManager.cpp.i
+.PHONY : src/Managers/EntityManager.i
+
+# target to preprocess a source file
+src/Managers/EntityManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.i
+.PHONY : src/Managers/EntityManager.cpp.i
+
+src/Managers/EntityManager.s: src/Managers/EntityManager.cpp.s
+.PHONY : src/Managers/EntityManager.s
+
+# target to generate assembly for a file
+src/Managers/EntityManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NotMario.dir/build.make CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.s
+.PHONY : src/Managers/EntityManager.cpp.s
+
 src/Managers/RenderManager.o: src/Managers/RenderManager.cpp.o
 .PHONY : src/Managers/RenderManager.o
 
@@ -452,6 +476,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/Managers/EntityManager.o"
+	@echo "... src/Managers/EntityManager.i"
+	@echo "... src/Managers/EntityManager.s"
 	@echo "... src/Managers/RenderManager.o"
 	@echo "... src/Managers/RenderManager.i"
 	@echo "... src/Managers/RenderManager.s"

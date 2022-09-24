@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <entt/entity/registry.hpp>
 
+#include "Components/RenderableC.h"
+
 class RenderManager
 {
 public:

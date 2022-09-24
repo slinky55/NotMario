@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/shaft/CLionProjects/NotMario/main.cpp" "CMakeFiles/NotMario.dir/main.cpp.o" "gcc" "CMakeFiles/NotMario.dir/main.cpp.o.d"
+  "/Users/shaft/CLionProjects/NotMario/src/Managers/EntityManager.cpp" "CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o" "gcc" "CMakeFiles/NotMario.dir/src/Managers/EntityManager.cpp.o.d"
   "/Users/shaft/CLionProjects/NotMario/src/Managers/RenderManager.cpp" "CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o" "gcc" "CMakeFiles/NotMario.dir/src/Managers/RenderManager.cpp.o.d"
   "/Users/shaft/CLionProjects/NotMario/src/NotMario/NotMario.cpp" "CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o" "gcc" "CMakeFiles/NotMario.dir/src/NotMario/NotMario.cpp.o.d"
   )
