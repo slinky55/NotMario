@@ -14,7 +14,6 @@ public:
 
     // Adding components
     RenderableC& AddSprite(entt::entity _ent);
-    PhysicsC& AddPhysics(entt::entity _ent);
 private:
     entt::registry& m_reg;
 };

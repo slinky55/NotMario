@@ -17,28 +17,22 @@ void NotMario::OnInit()
     m_player = m_entityMgr->Create();
 
     auto& playerR = m_entityMgr->AddSprite(m_player);
-    auto& playerPhys = m_entityMgr->AddPhysics(m_player);
+    auto& playerP = m_reg.emplace<PhysicsObject>(m_player);
 
     playerR.sprite = std::make_shared<sf::Sprite>();
     playerR.sprite->setTexture(m_resources->GetTexture("characters"));
     playerR.sprite->setTextureRect({ {1 * 32, 0 * 32}, {32, 32} });
-    playerR.sprite->setOrigin({16, 16});
     playerR.sprite->setPosition({400, 300});
     playerR.sprite->setScale({2, 2});
 
-    playerPhys.bodyDef.type = b2_dynamicBody;
-    playerPhys.bodyDef.position.Set(400 / PHYS_COORD_CONVERSION,
-                                    300 / PHYS_COORD_CONVERSION);
-    playerPhys.body = m_physMgr->RegisterBody(&playerPhys.bodyDef);
-    assert(playerPhys.body);
-    playerPhys.box.SetAsBox((64.f / PHYS_COORD_CONVERSION) / 2.f,
-                            (64.f / PHYS_COORD_CONVERSION) / 2.f);
-    playerPhys.fixture.shape = &playerPhys.box;
-    playerPhys.fixture.density = 1.f;
-    playerPhys.fixture.friction = 0.3f;
-    playerPhys.body->CreateFixture(&playerPhys.fixture);
+    playerP.pos = {400, 300};
+    playerP.size = {64, 64};
+    playerP.collider.halfSize = {32, 32};
+    playerP.collider.centerOffset = {32, 32};
+    playerP.collider.center = {playerP.pos + playerP.collider.centerOffset};
+    playerP.isDynamic = true;
 
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 50; i++)
     {
         auto tile = m_entityMgr->Create();
 
@@ -46,21 +40,19 @@ void NotMario::OnInit()
         tileR.sprite = std::make_shared<sf::Sprite>();
         tileR.sprite->setTexture(m_resources->GetTexture("world_tiles"));
         tileR.sprite->setTextureRect({
-            {8 * 16, 0 * 16},
-            {16, 16}
-        });
-        tileR.sprite->setOrigin({8, 8});
-        tileR.sprite->setScale({4, 4});
-        tileR.sprite->setPosition({i * 64.f, 568});
+                                             {8 * 16, 0 * 16},
+                                             {16, 16}
+                                     });
+        tileR.sprite->setScale({2, 2});
+        tileR.sprite->setPosition({i * 32.f,
+                                   600 - 32});
 
-        auto& tileP = m_entityMgr->AddPhysics(tile);
-        tileP.bodyDef.position.Set(i * 64.f / PHYS_COORD_CONVERSION,
-                                   568 / PHYS_COORD_CONVERSION);
-        tileP.body = m_physMgr->RegisterBody(&tileP.bodyDef);
-        assert(tileP.body);
-        tileP.box.SetAsBox((64.f / PHYS_COORD_CONVERSION) / 2.f,
-                                (64.f / PHYS_COORD_CONVERSION) / 2.f);
-        tileP.body->CreateFixture(&tileP.box, 0.f);
+        auto& tileP = m_reg.emplace<PhysicsObject>(tile);
+        tileP.pos = {tileR.sprite->getPosition()};
+        tileP.size = {32, 32};
+        tileP.collider.halfSize = {16, 16};
+        tileP.collider.centerOffset = tileP.collider.halfSize;
+        tileP.collider.center = {tileP.pos + tileP.collider.centerOffset};
     }
 }
 
@@ -73,6 +65,20 @@ void NotMario::Run()
             if (e.type == sf::Event::Closed)
                 m_window.close();
 
+        auto& playerP = m_reg.get<PhysicsObject>(m_player);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            playerP.vel.x = -200;
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            playerP.vel.x = 200;
+        else
+            playerP.vel.x = 0;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !playerP.jump)
+            if (playerP.onGround)
+                playerP.jump = true;
+
+
         Update();
         m_renderer->Draw();
     }
@@ -82,9 +88,8 @@ void NotMario::Update()
 {
     m_physMgr->Update(time.restart().asSeconds());
 
-    auto& rendComp = m_reg.get<RenderableC>(m_player);
-    auto& physComp = m_reg.get<PhysicsC>(m_player);
-    auto renderable = std::reinterpret_pointer_cast<sf::Sprite>(rendComp.sprite);
-    renderable->setPosition({physComp.body->GetPosition().x * PHYS_COORD_CONVERSION,
-                             physComp.body->GetPosition().y * PHYS_COORD_CONVERSION});
+    auto& playerP = m_reg.get<PhysicsObject>(m_player);
+    auto& playerR = m_reg.get<RenderableC>(m_player);
+
+    playerR.sprite->setPosition(playerP.pos);
 }

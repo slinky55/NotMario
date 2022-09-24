@@ -25,7 +25,7 @@ void RenderManager::Draw()
     // TODO: Get view of render-able entities, and call their draw method
     auto view = m_reg.view<RenderableC>();
 
-    for (auto entity : view)
+    for (auto& entity : view)
     {
         auto& renderable = m_reg.get<RenderableC>(entity);
         m_window.draw(*renderable.sprite);

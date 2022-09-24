@@ -1,17 +1,25 @@
 #pragma once
 
-#include <box2d/box2d.h>
+#include <iostream>
+#include <cmath>
+
 #include <entt/entity/registry.hpp>
+
+#include "Components/PhysicsC.h"
 
 class PhysicsManager
 {
 public:
-    explicit PhysicsManager(entt::registry& _reg);
+    explicit PhysicsManager(entt::registry &_reg,
+                            entt::entity& _player);
 
-    b2Body* RegisterBody(b2BodyDef* _bodyDef);
     void Update(float _dt);
 private:
     entt::registry& m_reg;
+    entt::entity& m_player;
 
-    b2World* m_world;
+    sf::Vector2f m_gravity {0.f, 9.8f};
+
+    [[nodiscard]] bool AABBDoesCollide(const AABB& A,
+                         const AABB& B);
 };

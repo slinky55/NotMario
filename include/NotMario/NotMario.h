@@ -36,9 +36,11 @@ private:
     std::shared_ptr<RenderManager> m_renderer = std::make_shared<RenderManager>(m_reg,
                                                                                 m_window);
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
-    std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg);
+    std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg, m_player);
     // Entities
     entt::entity m_player {0};
+
+    bool jumping = false;
 
     void Update();
 };
