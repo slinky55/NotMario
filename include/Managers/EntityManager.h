@@ -1,0 +1,8 @@
+//
+// Created by Bryant Mason on 9/23/22.
+//
+
+#ifndef NOTMARIO_ENTITYMANAGER_H
+#define NOTMARIO_ENTITYMANAGER_H
+
+#endif //NOTMARIO_ENTITYMANAGER_H
