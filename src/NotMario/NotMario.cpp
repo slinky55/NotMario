@@ -54,6 +54,27 @@ void NotMario::OnInit()
         tileP.collider.centerOffset = tileP.collider.halfSize;
         tileP.collider.center = {tileP.pos + tileP.collider.centerOffset};
     }
+
+    auto tile = m_entityMgr->Create();
+
+    auto& tileR = m_entityMgr->AddSprite(tile);
+    tileR.sprite = std::make_shared<sf::Sprite>();
+    tileR.sprite->setTexture(m_resources->GetTexture("world_tiles"));
+    tileR.sprite->setTextureRect({
+                                         {8 * 16, 0 * 16},
+                                         {16, 16}
+                                 });
+    tileR.sprite->setScale({2, 2});
+    tileR.sprite->setPosition({400,
+                               600 - 64});
+
+    auto& tileP = m_reg.emplace<PhysicsObject>(tile);
+    tileP.pos = {tileR.sprite->getPosition()};
+    tileP.size = {32, 32};
+    tileP.collider.halfSize = {16, 16};
+    tileP.collider.centerOffset = tileP.collider.halfSize;
+    tileP.collider.center = {tileP.pos + tileP.collider.centerOffset};
+
 }
 
 void NotMario::Run()
@@ -74,10 +95,10 @@ void NotMario::Run()
         else
             playerP.vel.x = 0;
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !playerP.jump)
-            if (playerP.onGround)
-                playerP.jump = true;
-
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerP.onGround)
+            playerP.jump = true;
+        else
+            playerP.jump = false;
 
         Update();
         m_renderer->Draw();

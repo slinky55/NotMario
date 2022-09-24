@@ -16,19 +16,17 @@ void PhysicsManager::Update(float _dt)
     playerP.prevPos = playerP.pos;
     playerP.prevVel = playerP.vel;
 
-    playerP.wasOnGround = playerP.onGround;
+    /*playerP.wasOnGround = playerP.onGround;
     playerP.pushedRight = playerP.pushesRight;
     playerP.pushedLeft = playerP.pushesLeft;
-    playerP.wasAtCeiling = playerP.atCeiling;
+    playerP.wasAtCeiling = playerP.atCeiling;*/
 
     playerP.vel += ((m_gravity * 35.f) * _dt);
 
     if (playerP.jump)
     {
-        sf::Vector2f up {0, -1};
-        playerP.vel = up * 120.f;
-        //playerP.vel += (up * 9.8f * 10.f * _dt);
-        playerP.jump = false;
+        playerP.vel = UP_NORM * 185.f;
+        playerP.onGround = false;
     }
 
     playerP.pos += (playerP.vel * _dt);
@@ -39,19 +37,29 @@ void PhysicsManager::Update(float _dt)
     {
         if (entity != m_player)
         {
-            auto& phys = m_reg.get<PhysicsObject>(entity);
-            if (AABBDoesCollide(playerP.collider, phys.collider)) {
-                playerP.vel.y = 0;
-                playerP.onGround = true;
+            auto& entityP = m_reg.get<PhysicsObject>(entity);
+            if (AABBDoesCollide(playerP, entityP))
+            {
+                ResolveCollision(playerP, entityP);
             }
         }
     }
 }
 
-bool PhysicsManager::AABBDoesCollide(const AABB &A,
-                                     const AABB &B)
+bool PhysicsManager::AABBDoesCollide(const PhysicsObject &A,
+                                     const PhysicsObject &B)
 {
-    if ( std::abs(A.center.x - B.center.x) > A.halfSize.x + B.halfSize.x ) return false;
-    if ( std::abs(A.center.y - B.center.y) > A.halfSize.y + B.halfSize.y ) return false;
+    if ( std::abs(A.collider.center.x - B.collider.center.x) > A.collider.halfSize.x + B.collider.halfSize.x ) return false;
+    if ( std::abs(A.collider.center.y - B.collider.center.y) > A.collider.halfSize.y + B.collider.halfSize.y ) return false;
     return true;
+}
+
+void PhysicsManager::ResolveCollision(PhysicsObject& _player,
+                                      PhysicsObject& _entity)
+{
+    if (_player.vel.y > 0)
+    {
+        _player.pos.y = _player.prevPos.y;
+        _player.onGround = true;
+    }
 }
