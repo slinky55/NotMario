@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 struct RenderableC
 {
-    std::shared_ptr<sf::Drawable> drawable;
+    std::shared_ptr<sf::Sprite> sprite;
 };
 

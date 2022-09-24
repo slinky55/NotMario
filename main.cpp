@@ -1,7 +1,5 @@
 #include "NotMario/NotMario.h"
 
-#include <SFML/Graphics.hpp>
-
 int main()
 {
     NotMario game;

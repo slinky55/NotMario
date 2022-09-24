@@ -1,8 +1,13 @@
-//
-// Created by slinky on 9/24/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_PHYSICSC_H
-#define NOTMARIO_PHYSICSC_H
+#include <box2d/box2d.h>
 
-#endif //NOTMARIO_PHYSICSC_H
+constexpr float PHYS_COORD_CONVERSION = 30.f;
+
+struct PhysicsC
+{
+    b2BodyDef bodyDef;
+    b2Body* body{nullptr};
+    b2PolygonShape box;
+    b2FixtureDef fixture;
+};

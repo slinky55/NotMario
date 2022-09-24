@@ -28,7 +28,7 @@ void RenderManager::Draw()
     for (auto entity : view)
     {
         auto& renderable = m_reg.get<RenderableC>(entity);
-        m_window.draw(*renderable.drawable);
+        m_window.draw(*renderable.sprite);
     }
 
     m_window.display();

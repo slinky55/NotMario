@@ -10,7 +10,8 @@ class ResourceManager
 public:
     ResourceManager() = default;
 
-    [[nodiscard]] bool LoadTexture(std::string_view _id, std::string_view _path);
+    [[nodiscard]] bool LoadTexture(std::string_view _id,
+                                   std::string_view _path);
     sf::Texture& GetTexture(std::string_view _id);
 
 private:
