@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "Components/InputC.h"
+
 class InputManager
 {
 public:

@@ -1,8 +1,14 @@
-//
-// Created by slinky on 9/25/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_INPUTC_H
-#define NOTMARIO_INPUTC_H
+enum class Command
+{
+    LEFT = 0,
+    RIGHT,
+    JUMP,
+    STOP
+};
 
-#endif //NOTMARIO_INPUTC_H
+struct InputC
+{
+    Command cmd;
+};

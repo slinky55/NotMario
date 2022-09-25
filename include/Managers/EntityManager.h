@@ -2,9 +2,7 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "Components/SpriteC.h"
-#include "Components/PhysicsC.h"
-#include "Components/RectangleC.h"
+#include "Components/Components.h"
 
 class EntityManager
 {
@@ -17,6 +15,7 @@ public:
     RectangleC& AddRectangleComponent(entt::entity& _ent);
     SpriteC& AddSpriteComponent(entt::entity& _ent);
     PhysicsC& AddPhysicsComponent(entt::entity& _ent);
+    InputC& AddInputComponent(entt::entity& _ent);
 
 private:
     entt::registry& m_reg;

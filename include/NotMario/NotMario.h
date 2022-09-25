@@ -21,6 +21,11 @@
 // Entities
 #include "Entities/Player.h"
 
+#include "Map.h"
+
+constexpr float MAP_WIDTH = 50.f;
+constexpr float MAP_HEIGHT = 38.f;
+
 class NotMario
 {
 public:
@@ -46,7 +51,12 @@ private:
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
 
     // Entities
-    std::shared_ptr<Player> m_player = std::make_shared<Player>();;
+    std::shared_ptr<Player> m_player = std::make_shared<Player>();
+
+    std::shared_ptr<Map> m_map = std::make_shared<Map>();
 
     void Update();
+    void LateUpdate();
+
+    void LoadMap();
 };

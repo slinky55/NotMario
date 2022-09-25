@@ -25,3 +25,8 @@ RectangleC& EntityManager::AddRectangleComponent(entt::entity& _ent)
 {
     return m_reg.emplace<RectangleC>(_ent);
 }
+
+InputC& EntityManager::AddInputComponent(entt::entity& _ent)
+{
+    return m_reg.emplace<InputC>(_ent);
+}

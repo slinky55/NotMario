@@ -22,5 +22,20 @@ bool InputManager::WindowDidClose(sf::RenderWindow& _window)
 
 void InputManager::PollInput()
 {
-    // TODO: Get view of entities with input component, then set command
+    Command cmd = Command::STOP;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        cmd = Command::LEFT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        cmd = Command::RIGHT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        cmd = Command::JUMP;
+
+    auto view = m_reg.view<InputC>();
+
+    for (auto& ent : view)
+    {
+        auto& inputC = view.get<InputC>(ent);
+        inputC.cmd = cmd;
+    }
 }

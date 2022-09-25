@@ -2,6 +2,12 @@
 
 #include <SFML/System/Vector2.hpp>
 
+enum class PhysicsType
+{
+    DYNAMIC,
+    STATIC
+};
+
 struct AABB
 {
     sf::Vector2f center;
@@ -19,5 +25,9 @@ struct PhysicsC
 
     sf::Vector2f size;
 
+    float mass;
+
     AABB collider;
+
+    PhysicsType type;
 };
