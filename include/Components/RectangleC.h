@@ -1,8 +1,8 @@
-//
-// Created by slinky on 9/25/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_RECTANGLEC_H
-#define NOTMARIO_RECTANGLEC_H
+#include <SFML/Graphics/RectangleShape.hpp>
 
-#endif //NOTMARIO_RECTANGLEC_H
+struct RectangleC
+{
+    sf::RectangleShape rect;
+};

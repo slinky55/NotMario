@@ -1,8 +1,15 @@
-//
-// Created by slinky on 9/25/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_PLAYER_H
-#define NOTMARIO_PLAYER_H
+#include <entt/entity/registry.hpp>
 
-#endif //NOTMARIO_PLAYER_H
+#include "Components/Components.h"
+
+struct Player
+{
+    // ID
+    entt::entity m_ID;
+
+    // Components
+    PhysicsC* m_physComponent;
+    SpriteC* m_spriteComponent;
+};

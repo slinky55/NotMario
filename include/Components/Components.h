@@ -1,8 +1,5 @@
-//
-// Created by slinky on 9/25/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_COMPONENTS_H
-#define NOTMARIO_COMPONENTS_H
-
-#endif //NOTMARIO_COMPONENTS_H
+#include "PhysicsC.h"
+#include "RectangleC.h"
+#include "SpriteC.h"

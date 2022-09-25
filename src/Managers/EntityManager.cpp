@@ -11,7 +11,17 @@ entt::entity EntityManager::Create()
     return m_reg.create();
 }
 
-RenderableC& EntityManager::AddSprite(entt::entity _ent)
+PhysicsC& EntityManager::AddPhysicsComponent(entt::entity &_ent) {
+    return m_reg.emplace<PhysicsC>(_ent);
+}
+
+
+SpriteC& EntityManager::AddSpriteComponent(entt::entity& _ent)
 {
-    return m_reg.emplace<RenderableC>(_ent);
+    return m_reg.emplace<SpriteC>(_ent);
+}
+
+RectangleC& EntityManager::AddRectangleComponent(entt::entity& _ent)
+{
+    return m_reg.emplace<RectangleC>(_ent);
 }

@@ -1,8 +1,17 @@
-//
-// Created by slinky on 9/25/22.
-//
+#pragma once
 
-#ifndef NOTMARIO_INPUTMANAGER_H
-#define NOTMARIO_INPUTMANAGER_H
+#include <entt/entity/registry.hpp>
 
-#endif //NOTMARIO_INPUTMANAGER_H
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+
+class InputManager
+{
+public:
+    explicit InputManager(entt::registry& _reg);
+
+    [[nodiscard]] static bool WindowDidClose(sf::RenderWindow& _window);
+    void PollInput();
+private:
+    entt::registry& m_reg;
+};

@@ -4,8 +4,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-struct RenderableC
+struct SpriteC
 {
-    std::shared_ptr<sf::Sprite> sprite;
+    sf::Sprite sprite;
 };
 

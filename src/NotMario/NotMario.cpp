@@ -3,114 +3,66 @@
 
 void NotMario::OnInit()
 {
-    // Load resources
+    // Load resources and check for errors
     if (!m_resources->LoadTexture("world_tiles",
                                   "../res/img/world.png"))
+    {
         std::cout << "Failed to load world tiles\n";
+        m_running = false; return;
+    }
     if (!m_resources->LoadTexture("characters",
                                   "../res/img/characters.png"))
-        std::cout << "Failed to load player textures\n";
-
-    m_renderer->OnInit();
-
-    // Load the player
-    m_player = m_entityMgr->Create();
-
-    auto& playerR = m_entityMgr->AddSprite(m_player);
-    auto& playerP = m_reg.emplace<PhysicsObject>(m_player);
-
-    playerR.sprite = std::make_shared<sf::Sprite>();
-    playerR.sprite->setTexture(m_resources->GetTexture("characters"));
-    playerR.sprite->setTextureRect({ {1 * 32, 0 * 32}, {32, 32} });
-    playerR.sprite->setPosition({400, 300});
-    playerR.sprite->setScale({2, 2});
-
-    playerP.pos = {400, 300};
-    playerP.size = {64, 64};
-    playerP.collider.halfSize = {32, 32};
-    playerP.collider.centerOffset = {32, 32};
-    playerP.collider.center = {playerP.pos + playerP.collider.centerOffset};
-    playerP.isDynamic = true;
-
-    for (int i = 0; i < 50; i++)
     {
-        auto tile = m_entityMgr->Create();
-
-        auto& tileR = m_entityMgr->AddSprite(tile);
-        tileR.sprite = std::make_shared<sf::Sprite>();
-        tileR.sprite->setTexture(m_resources->GetTexture("world_tiles"));
-        tileR.sprite->setTextureRect({
-                                             {8 * 16, 0 * 16},
-                                             {16, 16}
-                                     });
-        tileR.sprite->setScale({2, 2});
-        tileR.sprite->setPosition({i * 32.f,
-                                   600 - 32});
-
-        auto& tileP = m_reg.emplace<PhysicsObject>(tile);
-        tileP.pos = {tileR.sprite->getPosition()};
-        tileP.size = {32, 32};
-        tileP.collider.halfSize = {16, 16};
-        tileP.collider.centerOffset = tileP.collider.halfSize;
-        tileP.collider.center = {tileP.pos + tileP.collider.centerOffset};
+        std::cout << "Failed to load player textures\n";
+        m_running = false; return;
     }
 
-    auto tile = m_entityMgr->Create();
+    // Create window and check for errors
+    m_window.create( sf::VideoMode({800, 600}), "NotMario" );
+    if (!m_window.isOpen())
+    {
+        std::cout << "Failed to create window\n";
+        m_running = false; return;
+    }
 
-    auto& tileR = m_entityMgr->AddSprite(tile);
-    tileR.sprite = std::make_shared<sf::Sprite>();
-    tileR.sprite->setTexture(m_resources->GetTexture("world_tiles"));
-    tileR.sprite->setTextureRect({
-                                         {8 * 16, 0 * 16},
-                                         {16, 16}
-                                 });
-    tileR.sprite->setScale({2, 2});
-    tileR.sprite->setPosition({400,
-                               600 - 64});
+    // Initialize player components
+    m_player->m_ID = m_entityMgr->Create();
+    m_player->m_physComponent = &m_entityMgr->AddPhysicsComponent(m_player->m_ID);
+    m_player->m_spriteComponent = &m_entityMgr->AddSpriteComponent(m_player->m_ID);
 
-    auto& tileP = m_reg.emplace<PhysicsObject>(tile);
-    tileP.pos = {tileR.sprite->getPosition()};
-    tileP.size = {32, 32};
-    tileP.collider.halfSize = {16, 16};
-    tileP.collider.centerOffset = tileP.collider.halfSize;
-    tileP.collider.center = {tileP.pos + tileP.collider.centerOffset};
+    m_player->m_physComponent->pos = {400, 300};
+    m_player->m_physComponent->collider.halfSize = {16, 16};
+    m_player->m_physComponent->collider.centerOffset = {16, 16};
+    m_player->m_physComponent->collider.center =
+            m_player->m_physComponent->pos + m_player->m_physComponent->collider.centerOffset;
 
+    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
+    m_player->m_spriteComponent->sprite.setTextureRect({
+       {0, 2 * 32},
+       {32, 32}
+    });
+
+    m_running = true;
 }
 
 void NotMario::Run()
 {
-    while (m_window.isOpen())
+    while (m_running)
     {
-        sf::Event e{};
-        while (m_window.pollEvent(e))
-            if (e.type == sf::Event::Closed)
-                m_window.close();
+        if (InputManager::WindowDidClose(m_window))
+            m_running = false;
+        m_inputMgr->PollInput();
 
-        auto& playerP = m_reg.get<PhysicsObject>(m_player);
+        m_physMgr->Update(time.restart().asSeconds());
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            playerP.vel.x = -200;
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            playerP.vel.x = 200;
-        else
-            playerP.vel.x = 0;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerP.onGround)
-            playerP.jump = true;
-        else
-            playerP.jump = false;
-
+        // Game specific updates
         Update();
+
         m_renderer->Draw();
     }
 }
 
 void NotMario::Update()
 {
-    m_physMgr->Update(time.restart().asSeconds());
-
-    auto& playerP = m_reg.get<PhysicsObject>(m_player);
-    auto& playerR = m_reg.get<RenderableC>(m_player);
-
-    playerR.sprite->setPosition(playerP.pos);
+    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->pos);
 }

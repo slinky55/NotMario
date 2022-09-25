@@ -2,8 +2,9 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "Components/RenderableC.h"
+#include "Components/SpriteC.h"
 #include "Components/PhysicsC.h"
+#include "Components/RectangleC.h"
 
 class EntityManager
 {
@@ -13,7 +14,10 @@ public:
     entt::entity Create();
 
     // Adding components
-    RenderableC& AddSprite(entt::entity _ent);
+    RectangleC& AddRectangleComponent(entt::entity& _ent);
+    SpriteC& AddSpriteComponent(entt::entity& _ent);
+    PhysicsC& AddPhysicsComponent(entt::entity& _ent);
+
 private:
     entt::registry& m_reg;
 };

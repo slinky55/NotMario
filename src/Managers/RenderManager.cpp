@@ -10,25 +10,24 @@ RenderManager::RenderManager(entt::registry& _reg,
 
 // API
 
-void RenderManager::OnInit()
-{
-    m_window.create(sf::VideoMode({800, 600}), "Hello");
-    assert(m_window.isOpen());
-
-    // TODO: Log that render system was started
-}
-
 void RenderManager::Draw()
 {
     m_window.clear();
 
     // TODO: Get view of render-able entities, and call their draw method
-    auto view = m_reg.view<RenderableC>();
+    auto sprites = m_reg.view<SpriteC>();
+    auto rectShapes = m_reg.view<RectangleC>();
 
-    for (auto& entity : view)
+    for (auto& entity : sprites)
     {
-        auto& renderable = m_reg.get<RenderableC>(entity);
-        m_window.draw(*renderable.sprite);
+        auto& sprite = m_reg.get<SpriteC>(entity);
+        m_window.draw(sprite.sprite);
+    }
+
+    for (auto& entity : rectShapes)
+    {
+        auto& rectShape = m_reg.get<RectangleC>(entity);
+        m_window.draw(rectShape.rect);
     }
 
     m_window.display();

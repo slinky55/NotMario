@@ -13,10 +13,13 @@
 #include "Managers/EntityManager.h"
 #include "Managers/ResourceManager.h"
 #include "Managers/PhysicsManager.h"
+#include "Managers/InputManager.h"
 
 // Components
-#include "Components/RenderableC.h"
-#include "Components/PhysicsC.h"
+#include "Components/Components.h"
+
+// Entities
+#include "Entities/Player.h"
 
 class NotMario
 {
@@ -27,6 +30,8 @@ public:
     void OnInit();
     void Run();
 private:
+    bool m_running = false;
+
     entt::registry m_reg;
     sf::RenderWindow m_window;
     sf::Clock time;
@@ -36,11 +41,12 @@ private:
     std::shared_ptr<RenderManager> m_renderer = std::make_shared<RenderManager>(m_reg,
                                                                                 m_window);
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
-    std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg, m_player);
-    // Entities
-    entt::entity m_player {0};
+    std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg,
+                                                                                 *m_player);
+    std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
 
-    bool jumping = false;
+    // Entities
+    std::shared_ptr<Player> m_player = std::make_shared<Player>();;
 
     void Update();
 };
