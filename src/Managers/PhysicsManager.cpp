@@ -66,13 +66,13 @@ void PhysicsManager::ResolveCollision(Manifold* _manifold)
         else
             _manifold->A.pos.y += _manifold->depthY;
     }
-//    else
-//    {
-//        if (_manifold->A.pos.x < _manifold->B.pos.x)
-//            _manifold->A.pos.x -= _manifold->depthX;
-//        else
-//            _manifold->A.pos.x += _manifold->depthX;
-//    }
+    else
+    {
+        if (_manifold->A.pos.x < _manifold->B.pos.x)
+            _manifold->A.pos.x -= _manifold->depthX;
+        else
+            _manifold->A.pos.x += _manifold->depthX;
+    }
 
     delete _manifold;
 }

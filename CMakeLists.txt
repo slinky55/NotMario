@@ -8,6 +8,8 @@ include_directories(include)
 add_subdirectory(3rdparty/sfml)
 add_subdirectory(3rdparty/entt)
 
+add_subdirectory(testing/physicsengine)
+
 file(GLOB_RECURSE SRCS src/*.cpp)
 
 add_executable(${PROJECT_NAME} main.cpp ${SRCS})
