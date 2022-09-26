@@ -26,5 +26,6 @@ private:
     [[nodiscard]] bool AABBDoesCollide(const PhysicsC& A,
                                        const PhysicsC& B);
     static void ResolveCollision(PhysicsC& _player,
-                                 PhysicsC& _entity);
+                                 PhysicsC& _entity,
+                                 float _dt);
 };

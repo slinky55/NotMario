@@ -80,6 +80,7 @@ void NotMario::OnInit()
 
     // Initialize player components
     m_player->m_ID = m_entityMgr->Create();
+
     m_player->m_physComponent = &m_entityMgr->AddPhysicsComponent(m_player->m_ID);
     m_player->m_spriteComponent = &m_entityMgr->AddSpriteComponent(m_player->m_ID);
     m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->m_ID);
@@ -171,12 +172,14 @@ void NotMario::LoadMap()
                 if (type != TileType::BACKGROUND)
                 {
                     auto& physC = m_entityMgr->AddPhysicsComponent(tile);
-                    physC.pos = position;
-                    physC.vel = {0, 0};
+                    physC.pos = {
+                        m_map->tileset[type]->size.x * col,
+                        m_map->tileset[type]->size.y * row,
+                    };
                     physC.size = {16, 16};
                     physC.type = PhysicsType::STATIC;
                     physC.collider.halfSize = {8, 8};
-                    physC.collider.centerOffset = physC.collider.halfSize;
+                    physC.collider.centerOffset = {8, 8};
                     physC.collider.center = physC.pos + physC.collider.centerOffset;
                 }
             }

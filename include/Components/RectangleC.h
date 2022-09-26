@@ -4,5 +4,5 @@
 
 struct RectangleC
 {
-    sf::RectangleShape rect;
+    sf::RectangleShape rect {};
 };

@@ -41,6 +41,9 @@ private:
     sf::RenderWindow m_window;
     sf::Clock time;
 
+    // Entities
+    std::shared_ptr<Player> m_player = std::make_shared<Player>();
+
     // TODO: Instantiate managers here
     std::shared_ptr<ResourceManager> m_resources = std::make_shared<ResourceManager>();
     std::shared_ptr<RenderManager> m_renderer = std::make_shared<RenderManager>(m_reg,
@@ -49,9 +52,6 @@ private:
     std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg,
                                                                                  *m_player);
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
-
-    // Entities
-    std::shared_ptr<Player> m_player = std::make_shared<Player>();
 
     std::shared_ptr<Map> m_map = std::make_shared<Map>();
 

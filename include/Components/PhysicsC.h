@@ -30,4 +30,6 @@ struct PhysicsC
     AABB collider;
 
     PhysicsType type;
+
+    bool onGround {false};
 };

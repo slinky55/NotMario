@@ -7,13 +7,13 @@
 struct Player
 {
     // ID
-    entt::entity m_ID;
+    entt::entity m_ID {0};
 
     // Components
-    PhysicsC* m_physComponent;
-    SpriteC* m_spriteComponent;
-    InputC* m_inputComponent;
+    PhysicsC* m_physComponent {nullptr};
+    SpriteC* m_spriteComponent {nullptr};
+    InputC* m_inputComponent {nullptr};
 
-    bool didJump = false;
-    bool onGround = false;
+    bool didJump {false};
+    bool onGround {false};
 };
