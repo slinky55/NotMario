@@ -30,6 +30,7 @@ void NotMario::OnInit()
         std::cout << "Failed to create window\n";
         m_running = false; return;
     }
+    m_window.setFramerateLimit(60);
 
     m_map->numLayers = 2;
 
@@ -119,21 +120,17 @@ void NotMario::Run()
 
 void NotMario::Update()
 {
-    switch(m_player->m_inputComponent->cmd)
-    {
-        case Command::LEFT:
+        if (m_player->m_inputComponent->cmd == Command::LEFT)
             m_player->m_physComponent->vel.x = -50;
-            break;
-        case Command::RIGHT:
+        if (m_player->m_inputComponent->cmd == Command::RIGHT)
             m_player->m_physComponent->vel.x = 50;
-            break;
-        case Command::JUMP:
-            // TODO: Figure out a way to handle this later
-            break;
-        case Command::STOP:
+        if (m_player->m_inputComponent->cmd == Command::JUMP)
+        {
+            if (m_player->m_physComponent->onGround)
+                m_player->m_physComponent->didJump = true;
+        }
+        if (m_player->m_inputComponent->cmd == Command::STOP)
             m_player->m_physComponent->vel.x = 0;
-            break;
-    }
 }
 
 void NotMario::LateUpdate()

@@ -31,5 +31,6 @@ struct PhysicsC
 
     PhysicsType type;
 
+    bool didJump {false};
     bool onGround {false};
 };

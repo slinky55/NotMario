@@ -21,13 +21,22 @@ void PhysicsManager::Update(float _dt)
             m_player.m_physComponent->prevPos =
                     m_player.m_physComponent->pos;
 
+            if (m_player.m_physComponent->didJump &&
+                m_player.m_physComponent->onGround)
+            {
+                m_player.m_physComponent->vel.y = -120.f;
+                m_player.m_physComponent->onGround = false;
+                m_player.m_physComponent->didJump = false;
+            }
+
             if (!m_player.m_physComponent->onGround)
             {
                 m_player.m_physComponent->vel +=
                         ((m_gravity * 20.f) * _dt);
             }
-                m_player.m_physComponent->pos +=
-                        (m_player.m_physComponent->vel * _dt);
+
+            m_player.m_physComponent->pos +=
+                    (m_player.m_physComponent->vel * _dt);
 
             m_player.m_physComponent->collider.center =
                     m_player.m_physComponent->pos +
