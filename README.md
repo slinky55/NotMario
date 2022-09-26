@@ -1,2 +1,2 @@
 # NotMario
-It's not mario....
+This isn't Mario
