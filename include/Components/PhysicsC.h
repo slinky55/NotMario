@@ -34,3 +34,12 @@ struct PhysicsC
     bool didJump {false};
     bool onGround {false};
 };
+
+struct Manifold
+{
+    PhysicsC& A;
+    PhysicsC& B;
+
+    float depthX{0};
+    float depthY{0};
+};

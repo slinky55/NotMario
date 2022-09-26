@@ -12,75 +12,67 @@ void PhysicsManager::Update(float _dt)
 {
     auto view = m_reg.view<PhysicsC>();
 
-    for (auto& entity : view) {
-
-        if (entity == m_player.m_ID)
+    for (auto& A : view) {
+        auto& a = m_reg.get<PhysicsC>(A);
+        if (a.type == PhysicsType::DYNAMIC)
         {
-            m_player.m_physComponent->prevPos =
-                    m_player.m_physComponent->pos;
-            m_player.m_physComponent->prevPos =
-                    m_player.m_physComponent->pos;
+            a.prevVel = a.vel;
+            a.prevPos = a.pos;
 
-            if (m_player.m_physComponent->didJump &&
-                m_player.m_physComponent->onGround)
-            {
-                m_player.m_physComponent->vel.y = -120.f;
-                m_player.m_physComponent->onGround = false;
-                m_player.m_physComponent->didJump = false;
-            }
+            if (!a.onGround)
+                a.vel = a.prevVel + (m_gravity * _dt);
+            a.pos = a.prevPos + (a.vel * _dt);
 
-            if (!m_player.m_physComponent->onGround)
-            {
-                m_player.m_physComponent->vel +=
-                        ((m_gravity * 20.f) * _dt);
-            }
-
-            m_player.m_physComponent->pos +=
-                    (m_player.m_physComponent->vel * _dt);
-
-            m_player.m_physComponent->collider.center =
-                    m_player.m_physComponent->pos +
-                    m_player.m_physComponent->collider.centerOffset;
-
-            continue;
+            a.collider.center =
+                    a.pos + a.collider.centerOffset;
         }
+    }
 
-        auto &physC = m_reg.get<PhysicsC>(entity);
-
-        if (AABBDoesCollide(*m_player.m_physComponent,
-                            physC))
-            ResolveCollision(*m_player.m_physComponent,
-                             physC,
-                             _dt);
+    for (auto& A : view) {
+        auto& a = m_reg.get<PhysicsC>(A);
+        for (auto& B : view)
+        {
+            if (A == B) continue;
+            auto& b = m_reg.get<PhysicsC>(B);
+            AABBDoesCollide(a, b);
+        }
     }
 }
 
-bool PhysicsManager::AABBDoesCollide(const PhysicsC &A,
-                                     const PhysicsC &B)
+void PhysicsManager::AABBDoesCollide(PhysicsC &A,
+                                     PhysicsC &B)
 {
-    if ( std::abs(A.collider.center.x - B.collider.center.x) > A.collider.halfSize.x + B.collider.halfSize.x ) return false;
-    if ( std::abs(A.collider.center.y - B.collider.center.y) > A.collider.halfSize.y + B.collider.halfSize.y ) return false;
-    return true;
+    if ( std::abs(A.collider.center.x - B.collider.center.x) >= A.collider.halfSize.x + B.collider.halfSize.x ) return;
+    if ( std::abs(A.collider.center.y - B.collider.center.y) >= A.collider.halfSize.y + B.collider.halfSize.y ) return;
+
+    ResolveCollision(new Manifold{A, B,
+                          (A.collider.halfSize.x + B.collider.halfSize.x) -
+                          (std::abs(A.collider.center.x - B.collider.center.x)),
+
+                          (A.collider.halfSize.y + B.collider.halfSize.y) -
+                          (std::abs(A.collider.center.y - B.collider.center.y))});
 }
 
-void PhysicsManager::ResolveCollision(PhysicsC& _player,
-                                      PhysicsC& _entity,
-                                      float _dt)
+void PhysicsManager::ResolveCollision(Manifold* _manifold)
 {
-//    if (_player.pos.y < _entity.pos.y ||
-//        _player.pos.y > _entity.pos.y)
-//    {
-//        _player.pos.y = _player.prevPos.y;
-//    }
-//    else if (_player.pos.x < _entity.pos.x ||
-//             _player.pos.x > _entity.pos.x)
-//    {
-//        _player.pos.x = _player.prevPos.x;
-//    }
-
-    if (_player.pos.y < _entity.pos.y)
+    if (_manifold->depthX > _manifold->depthY)
     {
-        _player.vel.y = 0;
-        _player.onGround = true;
+        if (_manifold->A.pos.y < _manifold->B.pos.y)
+        {
+            _manifold->A.pos.y -= _manifold->depthY;
+            _manifold->A.vel.y = 0;
+            _manifold->A.onGround = true;
+        }
+        else
+            _manifold->A.pos.y += _manifold->depthY;
     }
+//    else
+//    {
+//        if (_manifold->A.pos.x < _manifold->B.pos.x)
+//            _manifold->A.pos.x -= _manifold->depthX;
+//        else
+//            _manifold->A.pos.x += _manifold->depthX;
+//    }
+
+    delete _manifold;
 }

@@ -13,6 +13,7 @@ struct Player
     PhysicsC* m_physComponent {nullptr};
     SpriteC* m_spriteComponent {nullptr};
     InputC* m_inputComponent {nullptr};
+    RectangleC* m_rectComponent {nullptr};
 
     bool didJump {false};
     bool onGround {false};

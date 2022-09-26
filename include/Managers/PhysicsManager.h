@@ -21,11 +21,9 @@ private:
     entt::registry& m_reg;
     Player& m_player;
 
-    sf::Vector2f m_gravity {0.f, 15.f};
+    sf::Vector2f m_gravity {0.f, 9.8f};
 
-    [[nodiscard]] bool AABBDoesCollide(const PhysicsC& A,
-                                       const PhysicsC& B);
-    static void ResolveCollision(PhysicsC& _player,
-                                 PhysicsC& _entity,
-                                 float _dt);
+    static void AABBDoesCollide(PhysicsC& A,
+                                PhysicsC& B);
+    static void ResolveCollision(Manifold* _manifold);
 };

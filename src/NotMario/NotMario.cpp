@@ -93,11 +93,16 @@ void NotMario::OnInit()
             m_player->m_physComponent->pos + m_player->m_physComponent->collider.centerOffset;
     m_player->m_physComponent->mass = 25.f;
 
-    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
-    m_player->m_spriteComponent->sprite.setTextureRect({
-       {0, 2 * 32},
-       {32, 32}
-    });
+//    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
+//    m_player->m_spriteComponent->sprite.setTextureRect({
+//       {0, 2 * 32},
+//       {32, 32}
+//    });
+
+    m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->m_ID);
+    m_player->m_rectComponent->rect.setSize({32, 32});
+    m_player->m_rectComponent->rect.setPosition(m_player->m_physComponent->pos);
+    m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
 
     LoadMap();
 
@@ -111,7 +116,7 @@ void NotMario::Run()
         if (InputManager::WindowDidClose(m_window))
             m_running = false;
         m_inputMgr->PollInput();
-        Update();   // Input updates
+        Update();       // Input updates
         m_physMgr->Update(time.restart().asSeconds());
         LateUpdate();   // Game related updates
         m_renderer->Draw();
@@ -120,22 +125,23 @@ void NotMario::Run()
 
 void NotMario::Update()
 {
-        if (m_player->m_inputComponent->cmd == Command::LEFT)
-            m_player->m_physComponent->vel.x = -50;
-        if (m_player->m_inputComponent->cmd == Command::RIGHT)
-            m_player->m_physComponent->vel.x = 50;
-        if (m_player->m_inputComponent->cmd == Command::JUMP)
-        {
-            if (m_player->m_physComponent->onGround)
-                m_player->m_physComponent->didJump = true;
-        }
-        if (m_player->m_inputComponent->cmd == Command::STOP)
-            m_player->m_physComponent->vel.x = 0;
+    if (m_player->m_inputComponent->cmd == Command::LEFT)
+        m_player->m_physComponent->vel.x = -50;
+    if (m_player->m_inputComponent->cmd == Command::RIGHT)
+        m_player->m_physComponent->vel.x = 50;
+    if (m_player->m_inputComponent->cmd == Command::JUMP)
+    {
+        if (m_player->m_physComponent->onGround)
+            m_player->m_physComponent->didJump = true;
+    }
+    if (m_player->m_inputComponent->cmd == Command::STOP)
+        m_player->m_physComponent->vel.x = 0;
 }
 
 void NotMario::LateUpdate()
 {
-    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->pos);
+//    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->pos);
+    m_player->m_rectComponent->rect.setPosition(m_player->m_physComponent->pos);
 }
 
 void NotMario::LoadMap()
