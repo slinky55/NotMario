@@ -14,7 +14,7 @@ public:
     // Adding components
     RectangleC& AddRectangleComponent(entt::entity& _ent);
     SpriteC& AddSpriteComponent(entt::entity& _ent);
-    PhysicsC& AddPhysicsComponent(entt::entity& _ent);
+    PhysicsBody& AddPhysicsComponent(entt::entity& _ent);
     InputC& AddInputComponent(entt::entity& _ent);
 
 private:

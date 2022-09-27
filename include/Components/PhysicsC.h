@@ -28,10 +28,9 @@ struct PhysicsBody
 
     float invMass {0};
     float mass {0};
+
+    PhysicsType type {PhysicsType::STATIC};
 };
-
-
-
 
 //struct PhysicsC
 //{

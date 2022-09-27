@@ -79,6 +79,18 @@ void NotMario::OnInit()
         {16, 16}
     };
 
+    m_map->tileset[TileType::CHEST_CLOSED] = new TileProperties {
+        m_resources->GetTexture("world_tiles"),
+        {{14 * 16, 4 * 16}, {16, 16}},
+        {16, 16}
+    };
+
+    m_map->tileset[TileType::SIGN_DARK_RIGHT] = new TileProperties {
+        m_resources->GetTexture("world_tiles"),
+        {{15 * 16, 1 * 16}, {16, 16}},
+        {16, 16}
+    };
+
     // Initialize player components
     m_player->m_ID = m_entityMgr->Create();
 
@@ -86,23 +98,25 @@ void NotMario::OnInit()
     m_player->m_spriteComponent = &m_entityMgr->AddSpriteComponent(m_player->m_ID);
     m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->m_ID);
 
-    m_player->m_physComponent->pos = {400, 300};
+    m_player->m_physComponent->position = {400, 300};
     m_player->m_physComponent->collider.halfSize = {16, 16};
-    m_player->m_physComponent->collider.centerOffset = {16, 16};
     m_player->m_physComponent->collider.center =
-            m_player->m_physComponent->pos + m_player->m_physComponent->collider.centerOffset;
-    m_player->m_physComponent->mass = 25.f;
+            m_player->m_physComponent->position + m_player->m_physComponent->collider.halfSize;
+    m_player->m_physComponent->type = PhysicsType::DYNAMIC;
+    PhysicsManager::SetMass(*m_player->m_physComponent,
+                            10.f);
 
-//    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
-//    m_player->m_spriteComponent->sprite.setTextureRect({
-//       {0, 2 * 32},
-//       {32, 32}
-//    });
-
+#ifdef DEBUG_DRAW
     m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->m_ID);
     m_player->m_rectComponent->rect.setSize({32, 32});
-    m_player->m_rectComponent->rect.setPosition(m_player->m_physComponent->pos);
     m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
+#else
+    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
+    m_player->m_spriteComponent->sprite.setTextureRect({
+       {0, 2 * 32},
+       {32, 32}
+    });
+#endif
 
     LoadMap();
 
@@ -126,22 +140,29 @@ void NotMario::Run()
 void NotMario::Update()
 {
     if (m_player->m_inputComponent->cmd == Command::LEFT)
-        m_player->m_physComponent->vel.x = -50;
+        PhysicsManager::ApplyForce(*m_player->m_physComponent,
+                   {-1, 0},
+                   300);
     if (m_player->m_inputComponent->cmd == Command::RIGHT)
-        m_player->m_physComponent->vel.x = 50;
+        PhysicsManager::ApplyForce(*m_player->m_physComponent,
+                   {1, 0},
+                   300);
     if (m_player->m_inputComponent->cmd == Command::JUMP)
     {
-        if (m_player->m_physComponent->onGround)
-            m_player->m_physComponent->didJump = true;
+        // TODO: Apply jump force here (maybe?)
+        PhysicsManager::ApplyForce(*m_player->m_physComponent,
+                                   {0, -1},
+                                   2500);
     }
-    if (m_player->m_inputComponent->cmd == Command::STOP)
-        m_player->m_physComponent->vel.x = 0;
 }
 
 void NotMario::LateUpdate()
 {
-//    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->pos);
+#ifdef DEBUG_DRAW
     m_player->m_rectComponent->rect.setPosition(m_player->m_physComponent->pos);
+#else
+    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->position);
+#endif
 }
 
 void NotMario::LoadMap()
@@ -163,28 +184,25 @@ void NotMario::LoadMap()
                 auto tile = m_entityMgr->Create();
 
                 position = {
-                        m_map->tileset[type]->size.x * col,
-                        m_map->tileset[type]->size.y * row,
+                        m_map->tileset[type]->size.x * static_cast<float>(col),
+                        m_map->tileset[type]->size.y * static_cast<float>(row)
                 };
+
+                if (type != TileType::BACKGROUND &&
+                    type != TileType::DIRT_MIDDLE)
+                {
+                    auto& physC = m_entityMgr->AddPhysicsComponent(tile);
+                    physC.position = position;
+                    physC.type = PhysicsType::STATIC;
+                    physC.collider.halfSize = {8, 8};
+                    physC.collider.center =
+                            physC.position + physC.collider.halfSize;
+                }
 
                 auto& spriteC = m_entityMgr->AddSpriteComponent(tile);
                 spriteC.sprite.setTexture(m_map->tileset[type]->tex);
                 spriteC.sprite.setTextureRect(m_map->tileset[type]->rect);
                 spriteC.sprite.setPosition(position);
-
-                if (type != TileType::BACKGROUND)
-                {
-                    auto& physC = m_entityMgr->AddPhysicsComponent(tile);
-                    physC.pos = {
-                        m_map->tileset[type]->size.x * col,
-                        m_map->tileset[type]->size.y * row,
-                    };
-                    physC.size = {16, 16};
-                    physC.type = PhysicsType::STATIC;
-                    physC.collider.halfSize = {8, 8};
-                    physC.collider.centerOffset = {8, 8};
-                    physC.collider.center = physC.pos + physC.collider.centerOffset;
-                }
             }
         }
     }

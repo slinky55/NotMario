@@ -11,8 +11,8 @@ entt::entity EntityManager::Create()
     return m_reg.create();
 }
 
-PhysicsC& EntityManager::AddPhysicsComponent(entt::entity &_ent) {
-    return m_reg.emplace<PhysicsC>(_ent);
+PhysicsBody& EntityManager::AddPhysicsComponent(entt::entity &_ent) {
+    return m_reg.emplace<PhysicsBody>(_ent);
 }
 
 
