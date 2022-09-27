@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -6,6 +7,12 @@ constexpr float PIXELS_PER_METER = 16.f;
 
 namespace Physics
 {
+    struct AABB
+    {
+        sf::Vector2f center;
+        sf::Vector2f halfSize;
+    };
+
     struct PhysicsBody
     {
         void SetMass(float _mass);
@@ -19,6 +26,8 @@ namespace Physics
                      acceleration;
 
         sf::Vector2f centerOffset;
+
+        AABB collider;
 
         bool hasGravity {false};
 
@@ -48,6 +57,9 @@ namespace Physics
         void Update(float _dt);
     private:
         std::vector<PhysicsBody*> m_bodyList;
+
+        bool CheckCollision(const AABB& A,
+                            const AABB& B);
     };
 
     PhysicsEngine::~PhysicsEngine()
@@ -74,11 +86,30 @@ namespace Physics
 
             body->velocity += (body->acceleration * _dt);
             body->position += (body->velocity * _dt);
+            body->collider.center = body->position;
 
             body->ClearForces();
         }
 
+        for (uint32_t A = 0; A < m_bodyList.size(); A++)
+        {
+            for (uint32_t B = 1; B < m_bodyList.size(); B++)
+            {
+                if (A == B) continue;
 
+                CheckCollision(m_bodyList[A]->collider,
+                               m_bodyList[B]->collider);
+            }
+        }
+    }
+
+    bool PhysicsEngine::CheckCollision(const AABB &A,
+                                        const AABB &B)
+    {
+        if ( std::abs(A.center.x - B.center.x) >= A.halfSize.x + B.halfSize.x ) return false;
+        if ( std::abs(A.center.y - B.center.y) >= A.halfSize.y + B.halfSize.y ) return false;
+
+        return true;
     }
 }
 
@@ -104,12 +135,20 @@ int main()
     testEntity.body->centerOffset = {16 / PIXELS_PER_METER, 16 / PIXELS_PER_METER};
     testEntity.body->hasGravity = true;
     testEntity.body->SetMass(70.f);
+    testEntity.body->collider = {
+            {128, 256},
+            {16, 16}
+    };
     testEntity.rect.setSize({32, 32});
     testEntity.rect.setFillColor(sf::Color::White);
 
     floor.body = physicsEngine.CreateBody();
     floor.body->position = {400 / PIXELS_PER_METER, (600 - 16) / PIXELS_PER_METER};
     floor.body->centerOffset = {400 / PIXELS_PER_METER, 16 / PIXELS_PER_METER};
+    floor.body->collider = {
+            {floor.body->position},
+            {400, 16}
+    };
     floor.rect.setSize({800, 32});
     floor.rect.setFillColor(sf::Color::White);
 

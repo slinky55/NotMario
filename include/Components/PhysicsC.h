@@ -12,34 +12,48 @@ struct AABB
 {
     sf::Vector2f center;
     sf::Vector2f halfSize;
-    sf::Vector2f centerOffset;
 };
 
-struct PhysicsC
+struct PhysicsBody
 {
-    sf::Vector2f prevPos;
-    sf::Vector2f pos;
+    sf::Vector2f position,
+            velocity,
+            acceleration;
 
-    sf::Vector2f prevVel;
-    sf::Vector2f vel;
-
-    sf::Vector2f size;
-
-    float mass;
+    sf::Vector2f centerOffset;
 
     AABB collider;
 
-    PhysicsType type;
+    bool hasGravity {false};
 
-    bool didJump {false};
-    bool onGround {false};
+    float invMass {0};
+    float mass {0};
 };
+
+
+
+
+//struct PhysicsC
+//{
+//    sf::Vector2f prevPos;
+//    sf::Vector2f pos;
+//
+//    sf::Vector2f prevVel;
+//    sf::Vector2f vel;
+//
+//    sf::Vector2f size;
+//
+//    float mass;
+//
+//    AABB collider;
+//
+//    PhysicsType type;
+//};
 
 struct Manifold
 {
-    PhysicsC& A;
-    PhysicsC& B;
+    PhysicsBody& A;
+    PhysicsBody& B;
 
-    float depthX{0};
-    float depthY{0};
+    sf::Vector2f depth;
 };

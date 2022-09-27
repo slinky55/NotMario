@@ -12,15 +12,15 @@ void PhysicsManager::Update(float _dt)
 {
     auto view = m_reg.view<PhysicsC>();
 
-    for (auto& A : view) {
+    for (auto& A : view)
+    {
         auto& a = m_reg.get<PhysicsC>(A);
         if (a.type == PhysicsType::DYNAMIC)
         {
             a.prevVel = a.vel;
             a.prevPos = a.pos;
 
-            if (!a.onGround)
-                a.vel = a.prevVel + (m_gravity * _dt);
+            a.vel = a.prevVel + (m_gravity * _dt);
             a.pos = a.prevPos + (a.vel * _dt);
 
             a.collider.center =
@@ -28,14 +28,11 @@ void PhysicsManager::Update(float _dt)
         }
     }
 
-    for (auto& A : view) {
-        auto& a = m_reg.get<PhysicsC>(A);
-        for (auto& B : view)
-        {
-            if (A == B) continue;
-            auto& b = m_reg.get<PhysicsC>(B);
-            AABBDoesCollide(a, b);
-        }
+    for (auto& other : view) {
+        if (other == m_player.m_ID) continue;
+        auto& otherP = m_reg.get<PhysicsC>(other);
+        AABBDoesCollide(*m_player.m_physComponent,
+                        otherP);
     }
 }
 
@@ -60,18 +57,16 @@ void PhysicsManager::ResolveCollision(Manifold* _manifold)
         if (_manifold->A.pos.y < _manifold->B.pos.y)
         {
             _manifold->A.pos.y -= _manifold->depthY;
-            _manifold->A.vel.y = 0;
-            _manifold->A.onGround = true;
+            _manifold->A.collider.center.y -= _manifold->depthY;
         }
         else
-            _manifold->A.pos.y += _manifold->depthY;
+        {
+
+        }
     }
     else
     {
-        if (_manifold->A.pos.x < _manifold->B.pos.x)
-            _manifold->A.pos.x -= _manifold->depthX;
-        else
-            _manifold->A.pos.x += _manifold->depthX;
+
     }
 
     delete _manifold;
