@@ -1,10 +1,12 @@
 #include "Managers/PhysicsManager.h"
 
+#include <utility>
+
 PhysicsManager::PhysicsManager(entt::registry &_reg,
-                              Player& _player)
+                               std::shared_ptr<Player> _player)
     :
     m_reg(_reg),
-    m_player(_player)
+    m_player(std::move(_player))
 {
 }
 
@@ -18,45 +20,34 @@ void PhysicsManager::Update(float _dt)
         auto& a = m_reg.get<PhysicsBody>(A);
         if (a.type == PhysicsType::DYNAMIC)
         {
-            ApplyForce(a,
-                       DOWN_NORM,
-                       9.8f * a.mass);
+            if (a.hasGravity)
+            {
+                a.ApplyForce(DOWN_NORM,
+                             GRAVITY.y * a.mass);
+            }
 
             a.velocity += (a.acceleration * _dt);
-            a.position += (a.velocity * _dt);
 
-            a.collider.center =
-                    a.position + a.collider.halfSize;
+            if (!a.onGround)
+                a.velocity.x *= (1 - DAMPING_CONSTANT);
+            else
+                a.velocity.x *= (1 - FRICTION_CONSTANT);
 
-            ClearForces(a);
+            a.position += ((a.velocity) * _dt);
+
+            a.collider.center = a.position;
+
+            a.ClearForces();
         }
     }
 
     // Check collisions
     for (auto& other : view) {
-        if (other == m_player.m_ID) continue;
+        if (other == m_player->ID) continue;
         auto& otherP = m_reg.get<PhysicsBody>(other);
-        CheckCollision(*m_player.m_physComponent,
+        CheckCollision(*m_player->m_physComponent,
                         otherP);
     }
-}
-
-void PhysicsManager::SetMass(PhysicsBody &_body,
-                             float _mass)
-{
-    _body.invMass = 1 / _mass;
-    _body.mass = _mass;
-}
-
-void PhysicsManager::ApplyForce(PhysicsBody &_body,
-                                sf::Vector2f _dir,
-                                float _forceInN)
-{
-    _body.acceleration += (_dir * (_forceInN * _body.invMass));
-}
-void PhysicsManager::ClearForces(PhysicsBody &_body)
-{
-    _body.acceleration = {0, 0};
 }
 
 void PhysicsManager::CheckCollision(PhysicsBody &A, PhysicsBody &B) {
@@ -80,15 +71,35 @@ void PhysicsManager::ResolveCollision(Manifold* _manifold)
         {
             _manifold->A.position.y -= _manifold->depth.y;
             _manifold->A.collider.center.y -= _manifold->depth.y;
+            _manifold->A.velocity.y = 0;
+            _manifold->A.onGround = true;
         }
-        else
+        else if (_manifold->A.position.y > _manifold->B.position.y)
         {
-
+            _manifold->A.position.y += _manifold->depth.y;
+            _manifold->A.collider.center.y += _manifold->depth.y;
+            _manifold->A.velocity.y = 0;
+            //_manifold->onCeiling = true;
+        }
+    }
+    else if (_manifold->depth.x < _manifold->depth.y)
+    {
+        if (_manifold->A.position.x < _manifold->B.position.x)
+        {
+            _manifold->A.position.x -= _manifold->depth.x;
+            _manifold->A.collider.center.x -= _manifold->depth.x;
+            _manifold->A.velocity.x = 0;
+        }
+        else if (_manifold->A.position.x > _manifold->B.position.x)
+        {
+            _manifold->A.position.x += _manifold->depth.x;
+            _manifold->A.collider.center.x += _manifold->depth.x;
+            _manifold->A.velocity.x = 0;
         }
     }
     else
     {
-
+        _manifold->A.position -= _manifold->depth;
     }
 
     delete _manifold;

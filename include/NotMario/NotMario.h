@@ -19,7 +19,7 @@
 #include "Components/Components.h"
 
 // Entities
-#include "Entities/Player.h"
+#include "Prefabs/Player.h"
 
 #include "Map.h"
 
@@ -34,6 +34,7 @@ public:
 
     void OnInit();
     void Run();
+    void OnClose();
 private:
     bool m_running = false;
 
@@ -43,6 +44,7 @@ private:
 
     // Entities
     std::shared_ptr<Player> m_player = std::make_shared<Player>();
+    std::vector<entt::entity> m_mapBlocks;
 
     // TODO: Instantiate managers here
     std::shared_ptr<ResourceManager> m_resources = std::make_shared<ResourceManager>();
@@ -50,7 +52,7 @@ private:
                                                                                 m_window);
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
     std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg,
-                                                                                 *m_player);
+                                                                                 m_player);
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
 
     std::shared_ptr<Map> m_map = std::make_shared<Map>();
@@ -58,5 +60,6 @@ private:
     void Update();
     void LateUpdate();
 
-    void LoadMap();
+    void CreatePlayer();
+    void LoadTestMap();
 };

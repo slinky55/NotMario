@@ -4,12 +4,20 @@
 
 #include "Components/Components.h"
 
+#include "Entities/Prefabs.h"
+#include "../Constants.h"
+
 class EntityManager
 {
 public:
     explicit EntityManager(entt::registry& _reg);
 
-    entt::entity Create();
+    entt::entity Register();
+
+    // Prefabs
+    entt::entity CreateBlock(const sf::Vector2f& _pos,
+                             const sf::Vector2f& _size,
+                             const sf::Color& _color);
 
     // Adding components
     RectangleC& AddRectangleComponent(entt::entity& _ent);

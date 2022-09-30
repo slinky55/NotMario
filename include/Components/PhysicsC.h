@@ -17,37 +17,29 @@ struct AABB
 struct PhysicsBody
 {
     sf::Vector2f position,
-            velocity,
-            acceleration;
+                 velocity,
+                 acceleration;
 
-    sf::Vector2f centerOffset;
+    sf::Vector2f halfSize;
 
     AABB collider;
 
     bool hasGravity {false};
+    bool onGround {false};
 
     float invMass {0};
     float mass {0};
 
     PhysicsType type {PhysicsType::STATIC};
-};
 
-//struct PhysicsC
-//{
-//    sf::Vector2f prevPos;
-//    sf::Vector2f pos;
-//
-//    sf::Vector2f prevVel;
-//    sf::Vector2f vel;
-//
-//    sf::Vector2f size;
-//
-//    float mass;
-//
-//    AABB collider;
-//
-//    PhysicsType type;
-//};
+    void SetMass(float _mass);
+    void ApplyForce(sf::Vector2f _dir,
+                    float _forceInN);
+    void ApplyImpulse(sf::Vector2f _dir,
+                      float _force);
+    void ClearForces();
+
+};
 
 struct Manifold
 {

@@ -1,5 +1,6 @@
-
 #include "NotMario/NotMario.h"
+
+#define DEBUG_DRAW
 
 void NotMario::OnInit()
 {
@@ -32,93 +33,9 @@ void NotMario::OnInit()
     }
     m_window.setFramerateLimit(60);
 
-    m_map->numLayers = 2;
+    LoadTestMap();
 
-    ParseMapData("sampleMap", *m_map);
-
-    // Load tileset data
-    m_map->tileset[TileType::ROCK_GROUND_LEFT] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{10 * 16, 0 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::ROCK_GROUND_MIDDLE] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{11 * 16, 0 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::ROCK_GROUND_RIGHT] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{12 * 16, 0 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::ROCK_WALL_LEFT] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{10 * 16, 1 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::DIRT_MIDDLE] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{11 * 16, 1 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::ROCK_WALL_RIGHT] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{12 * 16, 1 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::BACKGROUND] = new TileProperties {
-        m_resources->GetTexture("background"),
-        {{0, 0}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::CHEST_CLOSED] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{14 * 16, 4 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    m_map->tileset[TileType::SIGN_DARK_RIGHT] = new TileProperties {
-        m_resources->GetTexture("world_tiles"),
-        {{15 * 16, 1 * 16}, {16, 16}},
-        {16, 16}
-    };
-
-    // Initialize player components
-    m_player->m_ID = m_entityMgr->Create();
-
-    m_player->m_physComponent = &m_entityMgr->AddPhysicsComponent(m_player->m_ID);
-    m_player->m_spriteComponent = &m_entityMgr->AddSpriteComponent(m_player->m_ID);
-    m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->m_ID);
-
-    m_player->m_physComponent->position = {400, 300};
-    m_player->m_physComponent->collider.halfSize = {16, 16};
-    m_player->m_physComponent->collider.center =
-            m_player->m_physComponent->position + m_player->m_physComponent->collider.halfSize;
-    m_player->m_physComponent->type = PhysicsType::DYNAMIC;
-    PhysicsManager::SetMass(*m_player->m_physComponent,
-                            10.f);
-
-#ifdef DEBUG_DRAW
-    m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->m_ID);
-    m_player->m_rectComponent->rect.setSize({32, 32});
-    m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
-#else
-    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
-    m_player->m_spriteComponent->sprite.setTextureRect({
-       {0, 2 * 32},
-       {32, 32}
-    });
-#endif
-
-    LoadMap();
+    CreatePlayer();
 
     m_running = true;
 }
@@ -140,70 +57,115 @@ void NotMario::Run()
 void NotMario::Update()
 {
     if (m_player->m_inputComponent->cmd == Command::LEFT)
-        PhysicsManager::ApplyForce(*m_player->m_physComponent,
-                   {-1, 0},
-                   300);
-    if (m_player->m_inputComponent->cmd == Command::RIGHT)
-        PhysicsManager::ApplyForce(*m_player->m_physComponent,
-                   {1, 0},
-                   300);
-    if (m_player->m_inputComponent->cmd == Command::JUMP)
     {
-        // TODO: Apply jump force here (maybe?)
-        PhysicsManager::ApplyForce(*m_player->m_physComponent,
-                                   {0, -1},
-                                   2500);
+        m_player->m_physComponent->ApplyForce({-1.f, 0.f},
+                                              5000.f);
+    }
+
+    if (m_player->m_inputComponent->cmd == Command::RIGHT)
+    {
+        m_player->m_physComponent->ApplyForce({1.f, 0.f},
+                                              5000.f);
+    }
+
+    if (m_player->m_inputComponent->cmd == Command::JUMP &&
+        m_player->m_physComponent->onGround)
+    {
+        m_player->m_physComponent->ApplyImpulse(UP_NORM, 350.f);
+        m_player->m_physComponent->onGround = false;
     }
 }
 
 void NotMario::LateUpdate()
 {
+
 #ifdef DEBUG_DRAW
-    m_player->m_rectComponent->rect.setPosition(m_player->m_physComponent->pos);
+    m_player->m_rectComponent->rect.setPosition( (m_player->m_physComponent->position -
+                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
 #else
-    m_player->m_spriteComponent->sprite.setPosition(m_player->m_physComponent->position);
+    m_player->m_spriteComponent->sprite.setPosition((m_player->m_physComponent->position -
+                                                     m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
 #endif
 }
 
-void NotMario::LoadMap()
+void NotMario::CreatePlayer()
 {
-    sf::Vector2f position;
-    TileType type;
+    m_player->ID = m_entityMgr->Register();
 
-    for (int layer = 0; layer < m_map->numLayers; layer++)
-    {
-        MapLayer& current = m_map->layers[layer];
-        for (int row = 0; row < MAP_HEIGHT; row++)
-        {
-            for (int col = 0; col < MAP_WIDTH; col++)
-            {
-                type = static_cast<TileType>(current[row][col]);
+    m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->ID);
+    m_player->m_physComponent = &m_entityMgr->AddPhysicsComponent(m_player->ID);
+    m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->ID);
 
-                if (type == TileType::TRANSPARENT) continue;
+    assert(m_player->m_rectComponent &&
+           m_player->m_physComponent &&
+           m_player->m_inputComponent);
 
-                auto tile = m_entityMgr->Create();
+    m_player->m_physComponent->position = { 200 / PIXELS_PER_METER, 200 / PIXELS_PER_METER};
+    m_player->m_physComponent->halfSize = {16 / PIXELS_PER_METER, 16 / PIXELS_PER_METER};
+    m_player->m_physComponent->collider = {
+            m_player->m_physComponent->position,
+            m_player->m_physComponent->halfSize
+    };
+    m_player->m_physComponent->SetMass(70.f);
+    m_player->m_physComponent->type = PhysicsType::DYNAMIC;
+    m_player->m_physComponent->hasGravity = true;
 
-                position = {
-                        m_map->tileset[type]->size.x * static_cast<float>(col),
-                        m_map->tileset[type]->size.y * static_cast<float>(row)
-                };
+#ifdef DEBUG_DRAW
+    m_player->m_rectComponent->rect.setSize({32, 32});
+    m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
+    m_player->m_rectComponent->rect.setPosition( (m_player->m_physComponent->position -
+                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
+#else
+        m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
+        m_player->m_spriteComponent->sprite.setTextureRect({
+           {0, 2 * 32},
+           {32, 32}
+        });
+#endif
+}
 
-                if (type != TileType::BACKGROUND &&
-                    type != TileType::DIRT_MIDDLE)
-                {
-                    auto& physC = m_entityMgr->AddPhysicsComponent(tile);
-                    physC.position = position;
-                    physC.type = PhysicsType::STATIC;
-                    physC.collider.halfSize = {8, 8};
-                    physC.collider.center =
-                            physC.position + physC.collider.halfSize;
-                }
+void NotMario::LoadTestMap()
+{
+    sf::Color blockColor = sf::Color::Green;
 
-                auto& spriteC = m_entityMgr->AddSpriteComponent(tile);
-                spriteC.sprite.setTexture(m_map->tileset[type]->tex);
-                spriteC.sprite.setTextureRect(m_map->tileset[type]->rect);
-                spriteC.sprite.setPosition(position);
-            }
-        }
-    }
+    // Floor
+    m_entityMgr->CreateBlock(
+            {400, (600 - 16)},
+            {800, 32},
+            blockColor
+    );
+
+    // Ceiling
+    m_entityMgr->CreateBlock(
+            {400, 16},
+            {800, 32},
+            blockColor
+    );
+
+    // Left wall
+    m_entityMgr->CreateBlock(
+            {16, 300},
+            {32, 568},
+            blockColor
+    );
+
+    // Right wall
+    m_entityMgr->CreateBlock(
+            {(800 - 16), 300},
+            {32, 568},
+            blockColor
+    );
+
+    // Steps
+    m_entityMgr->CreateBlock(
+            {400, (600 - 48)},
+            {32, 32},
+            blockColor
+    );
+    m_entityMgr->CreateBlock(
+            {432, (600 - 80)},
+            {32, 32},
+            blockColor
+    );
+
 }

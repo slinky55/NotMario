@@ -6,7 +6,7 @@ m_reg(_reg)
 {
 }
 
-entt::entity EntityManager::Create()
+entt::entity EntityManager::Register()
 {
     return m_reg.create();
 }
@@ -29,4 +29,25 @@ RectangleC& EntityManager::AddRectangleComponent(entt::entity& _ent)
 InputC& EntityManager::AddInputComponent(entt::entity& _ent)
 {
     return m_reg.emplace<InputC>(_ent);
+}
+
+entt::entity EntityManager::CreateBlock(const sf::Vector2f &_pos,
+                                        const sf::Vector2f &_size,
+                                        const sf::Color &_color)
+{
+    auto block = Register();
+    auto& blockP = AddPhysicsComponent(block);
+    auto& blockR = AddRectangleComponent(block);
+
+    blockP.position = _pos / PIXELS_PER_METER;
+    blockP.halfSize = (_size / 2.f) / PIXELS_PER_METER;
+    blockP.collider = {
+            blockP.position,
+            blockP.halfSize
+    };
+    blockR.rect.setSize(_size);
+    blockR.rect.setFillColor(_color);
+    blockR.rect.setPosition((blockP.position - blockP.halfSize) * PIXELS_PER_METER);
+
+    return block;
 }
