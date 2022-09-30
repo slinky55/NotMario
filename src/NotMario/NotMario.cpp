@@ -163,7 +163,17 @@ void NotMario::LoadTestMap()
             blockColor
     );
     m_entityMgr->CreateBlock(
+            {432, (600 - 48)},
+            {32, 32},
+            blockColor
+    );
+    m_entityMgr->CreateBlock(
             {432, (600 - 80)},
+            {32, 32},
+            blockColor
+    );
+    m_entityMgr->CreateBlock(
+            {464, (600 - 48)},
             {32, 32},
             blockColor
     );

@@ -2,7 +2,7 @@
 
 constexpr float PIXELS_PER_METER {32.f};
 constexpr float DAMPING_CONSTANT {0.3f};
-constexpr float FRICTION_CONSTANT {0.1f};
+constexpr float FRICTION_CONSTANT {0.3f};
 
 constexpr sf::Vector2f UP_NORM {0.f, -1.f};
 constexpr sf::Vector2f DOWN_NORM {0.f, 1.f};
