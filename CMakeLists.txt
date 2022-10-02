@@ -10,6 +10,10 @@ add_subdirectory(3rdparty/entt)
 
 add_subdirectory(testing/physicsengine)
 
+if (UNIX)
+    include_directories(/usr/local/include)
+endif()
+
 file(GLOB_RECURSE SRCS src/*.cpp)
 
 add_executable(${PROJECT_NAME} main.cpp ${SRCS})
