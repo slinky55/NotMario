@@ -12,7 +12,7 @@
 #include "Managers/RenderManager.h"
 #include "Managers/EntityManager.h"
 #include "Managers/ResourceManager.h"
-#include "Managers/PhysicsManager.h"
+#include "Physics/PhysicsManager.h"
 #include "Managers/InputManager.h"
 
 // Components

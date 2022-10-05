@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Components/RectangleC.h"
-#include "Components/PhysicsC.h"
+#include "Physics/PhysicsBody.h"
 
 #include "Entities/Entity.h"
 

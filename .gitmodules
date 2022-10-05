@@ -4,3 +4,6 @@
 [submodule "3rdparty/sfml"]
 	path = 3rdparty/sfml
 	url = git@github.com:sfml/sfml
+[submodule "3rdparty/corrade"]
+	path = 3rdparty/corrade
+	url = git@github.com:mosra/corrade.git

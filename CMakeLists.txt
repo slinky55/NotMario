@@ -7,12 +7,7 @@ include_directories(include)
 
 add_subdirectory(3rdparty/sfml)
 add_subdirectory(3rdparty/entt)
-
-add_subdirectory(testing/physicsengine)
-
-if (UNIX)
-    include_directories(/usr/local/include)
-endif()
+add_subdirectory(3rdparty/corrade)
 
 file(GLOB_RECURSE SRCS src/*.cpp)
 

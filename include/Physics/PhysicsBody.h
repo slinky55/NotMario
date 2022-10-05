@@ -1,17 +1,11 @@
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
+#include "SFML/System/Vector2.hpp"
 
 enum class PhysicsType
 {
     DYNAMIC,
     STATIC
-};
-
-struct AABB
-{
-    sf::Vector2f center;
-    sf::Vector2f halfSize;
 };
 
 struct PhysicsBody

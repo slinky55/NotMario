@@ -3,9 +3,9 @@
 #include <iostream>
 #include <cmath>
 
-#include <entt/entity/registry.hpp>
+#include "entt/entity/registry.hpp"
 
-#include "Components/PhysicsC.h"
+#include "PhysicsBody.h"
 #include "Prefabs/Player.h"
 #include "Constants.h"
 

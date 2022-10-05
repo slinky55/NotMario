@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PhysicsC.h"
+#include "Physics/PhysicsBody.h"
 #include "RectangleC.h"
 #include "SpriteC.h"
 #include "InputC.h"

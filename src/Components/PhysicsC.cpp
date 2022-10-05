@@ -1,4 +1,4 @@
-#include "Components/PhysicsC.h"
+#include "Physics/PhysicsBody.h"
 
 void PhysicsBody::SetMass(float _mass)
 {

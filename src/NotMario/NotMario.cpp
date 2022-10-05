@@ -5,24 +5,24 @@
 void NotMario::OnInit()
 {
     // Load resources and check for errors
-    if (!m_resources->LoadTexture("world_tiles",
-                                  "../res/img/world.png"))
-    {
-        std::cout << "Failed to load world tiles\n";
-        m_running = false; return;
-    }
-    if (!m_resources->LoadTexture("characters",
-                                  "../res/img/characters.png"))
-    {
-        std::cout << "Failed to load player textures\n";
-        m_running = false; return;
-    }
-    if (!m_resources->LoadTexture("background",
-                                  "../res/img/bg.png"))
-    {
-        std::cout << "Failed to load background texture\n";
-        m_running = false; return;
-    }
+//    if (!m_resources->LoadTexture("world_tiles",
+//                                  "../../../res/img/world.png"))
+//    {
+//        std::cout << "Failed to load world tiles\n";
+//        m_running = false; return;
+//    }
+//    if (!m_resources->LoadTexture("characters",
+//                                  "../res/img/characters.png"))
+//    {
+//        std::cout << "Failed to load player textures\n";
+//        m_running = false; return;
+//    }
+//    if (!m_resources->LoadTexture("background",
+//                                  "../res/img/bg.png"))
+//    {
+//        std::cout << "Failed to load background texture\n";
+//        m_running = false; return;
+//    }
 
     // Create window and check for errors
     m_window.create( sf::VideoMode({800, 600}), "NotMario" );
