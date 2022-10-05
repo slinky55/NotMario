@@ -1,6 +1,8 @@
-
+#include <iostream>
 
 #include "NotMario/NotMario.h"
+
+#include <Physics/Utils/BodyAllocator.h>
 
 int main()
 {
