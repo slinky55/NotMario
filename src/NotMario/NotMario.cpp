@@ -80,8 +80,10 @@ void NotMario::LateUpdate()
 {
 
 #ifdef DEBUG_DRAW
-    m_player->m_rectComponent->rect.setPosition( (m_player->m_physComponent->position -
-                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
+    m_player->m_rectComponent->rect.setPosition( {((m_player->m_physComponent->position -
+                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
+                                                 ((m_player->m_physComponent->position -
+                                                   m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
 #else
     m_player->m_spriteComponent->sprite.setPosition((m_player->m_physComponent->position -
                                                      m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
@@ -107,14 +109,16 @@ void NotMario::CreatePlayer()
             m_player->m_physComponent->halfSize
     };
     m_player->m_physComponent->SetMass(70.f);
-    m_player->m_physComponent->type = PhysicsType::DYNAMIC;
+    m_player->m_physComponent->type = p2d::PhysicsType::DYNAMIC;
     m_player->m_physComponent->hasGravity = true;
 
 #ifdef DEBUG_DRAW
     m_player->m_rectComponent->rect.setSize({32, 32});
     m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
-    m_player->m_rectComponent->rect.setPosition( (m_player->m_physComponent->position -
-                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
+    m_player->m_rectComponent->rect.setPosition( {((m_player->m_physComponent->position -
+                                                    m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
+                                                  ((m_player->m_physComponent->position -
+                                                    m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
 #else
         m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
         m_player->m_spriteComponent->sprite.setTextureRect({

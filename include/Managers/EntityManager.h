@@ -4,8 +4,9 @@
 
 #include "Components/Components.h"
 
-#include "Entities/Prefabs.h"
-#include "../Constants.h"
+#include "Entities/Player.h"
+#include "Entities/Block.h"
+#include "Physics/Constants.h"
 
 class EntityManager
 {
@@ -22,7 +23,7 @@ public:
     // Adding components
     RectangleC& AddRectangleComponent(entt::entity& _ent);
     SpriteC& AddSpriteComponent(entt::entity& _ent);
-    PhysicsBody& AddPhysicsComponent(entt::entity& _ent);
+    p2d::PhysicsBody& AddPhysicsComponent(entt::entity& _ent);
     InputC& AddInputComponent(entt::entity& _ent);
 
 private:

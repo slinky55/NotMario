@@ -19,7 +19,7 @@
 #include "Components/Components.h"
 
 // Entities
-#include "Prefabs/Player.h"
+#include "Entities/Player.h"
 
 #include "Map.h"
 
@@ -51,7 +51,7 @@ private:
     std::shared_ptr<RenderManager> m_renderer = std::make_shared<RenderManager>(m_reg,
                                                                                 m_window);
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
-    std::shared_ptr<PhysicsManager> m_physMgr = std::make_shared<PhysicsManager>(m_reg,
+    std::shared_ptr<p2d::PhysicsManager> m_physMgr = std::make_shared<p2d::PhysicsManager>(m_reg,
                                                                                  m_player);
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
 

@@ -1,44 +1,48 @@
 #pragma once
 
-#include "SFML/System/Vector2.hpp"
+#include "Math/Vector2.h"
+#include "AABB.h"
 
-enum class PhysicsType
+namespace p2d
 {
-    DYNAMIC,
-    STATIC
-};
+    enum class PhysicsType
+    {
+        DYNAMIC,
+        STATIC
+    };
 
-struct PhysicsBody
-{
-    sf::Vector2f position,
-                 velocity,
-                 acceleration;
+    struct PhysicsBody
+    {
+        Vector2 position,
+                velocity,
+                acceleration;
 
-    sf::Vector2f halfSize;
+        Vector2 halfSize;
 
-    AABB collider;
+        AABB collider;
 
-    bool hasGravity {false};
-    bool onGround {false};
+        bool hasGravity {false};
+        bool onGround {false};
 
-    float invMass {0};
-    float mass {0};
+        float invMass {0};
+        float mass {0};
 
-    PhysicsType type {PhysicsType::STATIC};
+        PhysicsType type {PhysicsType::STATIC};
 
-    void SetMass(float _mass);
-    void ApplyForce(sf::Vector2f _dir,
-                    float _forceInN);
-    void ApplyImpulse(sf::Vector2f _dir,
-                      float _force);
-    void ClearForces();
+        void SetMass(float _mass);
+        void ApplyForce(Vector2 _dir,
+                        float _forceInN);
+        void ApplyImpulse(Vector2 _dir,
+                          float _force);
+        void ClearForces();
 
-};
+    };
 
-struct Manifold
-{
-    PhysicsBody& A;
-    PhysicsBody& B;
+    struct Manifold
+    {
+        PhysicsBody& A;
+        PhysicsBody& B;
 
-    sf::Vector2f depth;
-};
+        Vector2 depth;
+    };
+}

@@ -5,22 +5,25 @@
 
 #include "entt/entity/registry.hpp"
 
+#include "Entities/Player.h"
 #include "PhysicsBody.h"
-#include "Prefabs/Player.h"
 #include "Constants.h"
 
-class PhysicsManager
+namespace p2d
 {
-public:
-    PhysicsManager(entt::registry &_reg,
-                   std::shared_ptr<Player> _player);
+    class PhysicsManager
+    {
+    public:
+        PhysicsManager(entt::registry &_reg,
+                       std::shared_ptr<Player> _player);
 
-    void Update(float _dt);
-private:
-    entt::registry& m_reg;
-    std::shared_ptr<Player> m_player;
+        void Update(float _dt);
+    private:
+        entt::registry& m_reg;
+        std::shared_ptr<Player> m_player;
 
-    static void CheckCollision(PhysicsBody& A,
-                                PhysicsBody& B);
-    static void ResolveCollision(Manifold* _manifold);
-};
+        static void CheckCollision(PhysicsBody& A,
+                                   PhysicsBody& B);
+        static void ResolveCollision(Manifold* _manifold);
+    };
+}
