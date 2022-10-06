@@ -12,11 +12,36 @@ namespace p2d
     {
     }
 
+
+    // API
+    PhysicsBody* PhysicsManager::Create()
+    {
+        return new (m_bodyList.Allocate()) PhysicsBody;
+    }
+
     void PhysicsManager::Update(float _dt)
     {
         auto view = m_reg.view<PhysicsBody>();
+        auto itr = reinterpret_cast<PhysicsBody*>(m_bodyList.Start());
 
-        // Move dynamic objects
+        for (uint32_t i = 0; i < m_bodyList.NumBodies(); i += sizeof(PhysicsBody))
+        {
+            PhysicsBody& body = itr[i];
+
+            if (body.type == PhysicsType::DYNAMIC)
+            {
+                if (body.hasGravity)
+                    body.ApplyForce(DOWN_NORM,
+                                    GRAVITY.y * body.mass);
+
+                body.velocity += (body.acceleration * _dt);
+                body.position += (body.velocity * _dt);
+
+                body.ClearForces();
+            }
+        }
+
+        /*// Move dynamic objects
         for (auto& A : view)
         {
             auto& a = m_reg.get<PhysicsBody>(A);
@@ -49,9 +74,10 @@ namespace p2d
             auto& otherP = m_reg.get<PhysicsBody>(other);
             CheckCollision(*m_player->m_physComponent,
                            otherP);
-        }
+        }*/
     }
 
+    // Utility functions
     void PhysicsManager::CheckCollision(PhysicsBody &A, PhysicsBody &B) {
         if ( std::abs(A.collider.center.x - B.collider.center.x) >= A.collider.halfSize.x + B.collider.halfSize.x ) return;
         if ( std::abs(A.collider.center.y - B.collider.center.y) >= A.collider.halfSize.y + B.collider.halfSize.y ) return;

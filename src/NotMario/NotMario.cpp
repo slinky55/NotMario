@@ -95,12 +95,10 @@ void NotMario::CreatePlayer()
     m_player->ID = m_entityMgr->Register();
 
     m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->ID);
-    m_player->m_physComponent = &m_entityMgr->AddPhysicsComponent(m_player->ID);
+    m_player->m_physComponent = m_physMgr->Create();
     m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->ID);
 
-    assert(m_player->m_rectComponent &&
-           m_player->m_physComponent &&
-           m_player->m_inputComponent);
+    assert(m_player->m_physComponent);
 
     m_player->m_physComponent->position = { 200 / PIXELS_PER_METER, 200 / PIXELS_PER_METER};
     m_player->m_physComponent->halfSize = {16 / PIXELS_PER_METER, 16 / PIXELS_PER_METER};
@@ -133,11 +131,10 @@ void NotMario::LoadTestMap()
     sf::Color blockColor = sf::Color::Green;
 
     // Floor
-    m_entityMgr->CreateBlock(
-            {400, (600 - 16)},
-            {800, 32},
-            blockColor
-    );
+    CreateMapBlock({400, (600 - 16)},
+                   {800, 32},
+                   blockColor);
+
 
     // Ceiling
     m_entityMgr->CreateBlock(
@@ -181,5 +178,34 @@ void NotMario::LoadTestMap()
             {32, 32},
             blockColor
     );
+}
 
+void NotMario::CreateMapBlock(const sf::Vector2f& _pos,
+                              const sf::Vector2f& _size,
+                              const sf::Color& _color)
+{
+    auto block = m_mapBlocks.emplace_back();
+
+    block->ID = m_entityMgr->Register();
+
+    block->m_physicsComponent = m_physMgr->Create();
+    assert(block->m_physicsComponent);
+
+    block->m_physicsComponent->position = {
+            _pos.x / PIXELS_PER_METER,
+            _pos.y / PIXELS_PER_METER
+    };
+    block->m_physicsComponent->halfSize = {
+            (_size.x / 2.f) / PIXELS_PER_METER,
+            (_size.y / 2.f) / PIXELS_PER_METER
+    };
+    block->m_physicsComponent->collider = {
+            block->m_physicsComponent->position,
+            block->m_physicsComponent->halfSize
+    };
+
+    block->m_rectComponent = &m_entityMgr->AddRectangleComponent(block->ID);
+    block->m_rectComponent->rect.setPosition(_pos);
+    block->m_rectComponent->rect.setSize(_size);
+    block->m_rectComponent->rect.setFillColor(_color);
 }

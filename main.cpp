@@ -11,5 +11,7 @@ int main()
     game.OnInit();
     game.Run();
 
+    p2d::BodyAllocator list {3};
+
     return 0;
 }

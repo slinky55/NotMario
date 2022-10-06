@@ -6,7 +6,7 @@ namespace p2d
     {
         m_size = _maxObjects * (sizeof(PhysicsBody));
 
-        m_start = aligned_alloc(alignof(PhysicsBody), m_size);
+        m_start = malloc(m_size);
         m_current = m_start;
     }
 
@@ -17,8 +17,19 @@ namespace p2d
 
     void* BodyAllocator::Allocate()
     {
-        void* address = m_current;
+        void* address = reinterpret_cast<uint8_t*>(m_current);
         m_current = reinterpret_cast<uint8_t*>(m_current) + sizeof(PhysicsBody);
+        m_numBodies++;
         return address;
+    }
+
+    void* BodyAllocator::Start() const
+    {
+        return m_start;
+    }
+
+    uint32_t BodyAllocator::NumBodies() const
+    {
+        return m_numBodies;
     }
 }

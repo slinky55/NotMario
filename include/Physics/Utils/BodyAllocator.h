@@ -20,11 +20,14 @@ namespace p2d
         //void Free();
         //void Clear();
 
+        void* Start() const;
+        uint32_t NumBodies() const;
+
     private:
         void* m_start;
         void* m_current;
         uint32_t m_size {0};
-        uint32_t m_numObjects {0};
+        uint32_t m_numBodies {0};
         uint32_t m_bytesUsed {0};
     };
 }

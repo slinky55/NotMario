@@ -44,7 +44,7 @@ private:
 
     // Entities
     std::shared_ptr<Player> m_player = std::make_shared<Player>();
-    std::vector<entt::entity> m_mapBlocks;
+    std::vector<std::shared_ptr<Block>> m_mapBlocks;
 
     // TODO: Instantiate managers here
     std::shared_ptr<ResourceManager> m_resources = std::make_shared<ResourceManager>();
@@ -61,5 +61,8 @@ private:
     void LateUpdate();
 
     void CreatePlayer();
+    void CreateMapBlock(const sf::Vector2f& _pos,
+                        const sf::Vector2f& _size,
+                        const sf::Color& _color);
     void LoadTestMap();
 };
