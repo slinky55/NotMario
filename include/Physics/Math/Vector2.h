@@ -19,6 +19,8 @@ namespace p2d
         Vector2& operator-=(const Vector2& _lhs);
         Vector2& operator*=(float _scalar);
         Vector2& operator/=(float _scalar);
+
+        bool operator==(const Vector2& _lhs) const;
     };
 }
 

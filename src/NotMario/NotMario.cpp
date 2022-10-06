@@ -42,6 +42,11 @@ void NotMario::OnInit()
 
 void NotMario::Run()
 {
+    float fps;
+    sf::Clock frameClock;
+    sf::Time prev = frameClock.getElapsedTime();
+    sf::Time current;
+
     while (m_running)
     {
         if (InputManager::WindowDidClose(m_window))
@@ -51,6 +56,11 @@ void NotMario::Run()
         m_physMgr->Update(time.restart().asSeconds());
         LateUpdate();   // Game related updates
         m_renderer->Draw();
+
+        current = frameClock.getElapsedTime();
+        fps = 1.0f / (current.asSeconds() - prev.asSeconds()); // the asSeconds returns a float
+        std::cout << "fps = " << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+        prev = current;
     }
 }
 
@@ -59,19 +69,19 @@ void NotMario::Update()
     if (m_player->m_inputComponent->cmd == Command::LEFT)
     {
         m_player->m_physComponent->ApplyForce({-1.f, 0.f},
-                                              5000.f);
+                                              2500.f);
     }
 
     if (m_player->m_inputComponent->cmd == Command::RIGHT)
     {
         m_player->m_physComponent->ApplyForce({1.f, 0.f},
-                                              5000.f);
+                                              2500.f);
     }
 
     if (m_player->m_inputComponent->cmd == Command::JUMP &&
         m_player->m_physComponent->onGround)
     {
-        m_player->m_physComponent->ApplyImpulse(UP_NORM, 350.f);
+        m_player->m_physComponent->ApplyImpulse(UP_NORM, 335.f);
         m_player->m_physComponent->onGround = false;
     }
 }
@@ -134,58 +144,45 @@ void NotMario::LoadTestMap()
     CreateMapBlock({400, (600 - 16)},
                    {800, 32},
                    blockColor);
-
-
     // Ceiling
-    m_entityMgr->CreateBlock(
-            {400, 16},
-            {800, 32},
-            blockColor
-    );
+    CreateMapBlock({400, 16},
+                   {800, 32},
+                   blockColor);
 
-    // Left wall
-    m_entityMgr->CreateBlock(
-            {16, 300},
-            {32, 568},
-            blockColor
-    );
+    // Left
+    CreateMapBlock({16, 300},
+                   {32, 568},
+                   blockColor);
 
-    // Right wall
-    m_entityMgr->CreateBlock(
-            {(800 - 16), 300},
-            {32, 568},
-            blockColor
-    );
+    // Right
+    CreateMapBlock({(800 - 16), 300},
+                   {32, 568},
+                   blockColor);
 
     // Steps
-    m_entityMgr->CreateBlock(
-            {400, (600 - 48)},
-            {32, 32},
-            blockColor
-    );
-    m_entityMgr->CreateBlock(
-            {432, (600 - 48)},
-            {32, 32},
-            blockColor
-    );
-    m_entityMgr->CreateBlock(
-            {432, (600 - 80)},
-            {32, 32},
-            blockColor
-    );
-    m_entityMgr->CreateBlock(
-            {464, (600 - 48)},
-            {32, 32},
-            blockColor
-    );
+    CreateMapBlock({400, (600 - 48)},
+                   {32, 32},
+                   blockColor);
+
+    CreateMapBlock({432, (600 - 48)},
+                   {32, 32},
+                   blockColor);
+
+    CreateMapBlock({432, (600 - 80)},
+                   {32, 32},
+                   blockColor);
+
+    CreateMapBlock({464, (600 - 48)},
+                   {32, 32},
+                   blockColor);
 }
 
-void NotMario::CreateMapBlock(const sf::Vector2f& _pos,
+std::shared_ptr<Block>& NotMario::CreateMapBlock(const sf::Vector2f& _pos,
                               const sf::Vector2f& _size,
                               const sf::Color& _color)
 {
-    auto block = m_mapBlocks.emplace_back();
-
+    auto& block = m_mapBlocks.emplace_back();
+    block = std::make_shared<Block>();
     block->ID = m_entityMgr->Register();
 
     block->m_physicsComponent = m_physMgr->Create();
@@ -205,7 +202,16 @@ void NotMario::CreateMapBlock(const sf::Vector2f& _pos,
     };
 
     block->m_rectComponent = &m_entityMgr->AddRectangleComponent(block->ID);
-    block->m_rectComponent->rect.setPosition(_pos);
+    block->m_rectComponent->rect.setPosition( {(block->m_physicsComponent->position.x - block->m_physicsComponent->halfSize.x) * PIXELS_PER_METER,
+                                               (block->m_physicsComponent->position.y - block->m_physicsComponent->halfSize.y) * PIXELS_PER_METER} );
     block->m_rectComponent->rect.setSize(_size);
+#ifdef  SHOW_COLLIDERS
+    block->m_rectComponent->rect.setFillColor(sf::Color::Black);
+    block->m_rectComponent->rect.setOutlineColor(_color);
+    block->m_rectComponent->rect.setOutlineThickness(1.f);
+#else
     block->m_rectComponent->rect.setFillColor(_color);
+#endif
+
+    return block;
 }

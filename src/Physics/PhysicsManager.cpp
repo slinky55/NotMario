@@ -4,83 +4,64 @@
 
 namespace p2d
 {
-    PhysicsManager::PhysicsManager(entt::registry &_reg,
-                                   std::shared_ptr<Player> _player)
-            :
-            m_reg(_reg),
-            m_player(std::move(_player))
+    PhysicsManager::PhysicsManager(std::shared_ptr<Player> _player)
+    :
+    m_player(std::move(_player))
     {
+    }
+
+    PhysicsManager::~PhysicsManager()
+    {
+        for (auto body : m_bodyList)
+        {
+            m_allocator.deallocate(body,
+                                   BODY_SIZE);
+        }
     }
 
 
     // API
     PhysicsBody* PhysicsManager::Create()
     {
-        return new (m_bodyList.Allocate()) PhysicsBody;
+        /*auto* body = reinterpret_cast<PhysicsBody*>( m_allocator.Allocate(BODY_SIZE,
+                                                                          BODY_ALIGN)); */
+        auto* body = reinterpret_cast<PhysicsBody*>( m_allocator.allocate(BODY_SIZE));
+        body->ID = m_bodyCount++;
+        return m_bodyList.emplace_front(body);
     }
 
     void PhysicsManager::Update(float _dt)
     {
-        auto view = m_reg.view<PhysicsBody>();
-        auto itr = reinterpret_cast<PhysicsBody*>(m_bodyList.Start());
-
-        for (uint32_t i = 0; i < m_bodyList.NumBodies(); i += sizeof(PhysicsBody))
+        for (auto body : m_bodyList)
         {
-            PhysicsBody& body = itr[i];
-
-            if (body.type == PhysicsType::DYNAMIC)
+            if (body->type == PhysicsType::DYNAMIC)
             {
-                if (body.hasGravity)
-                    body.ApplyForce(DOWN_NORM,
-                                    GRAVITY.y * body.mass);
+                if (body->hasGravity)
+                    body->ApplyForce(DOWN_NORM,
+                                    GRAVITY.y * body->mass);
 
-                body.velocity += (body.acceleration * _dt);
-                body.position += (body.velocity * _dt);
+                body->velocity += (body->acceleration * _dt);
+                body->velocity.x *= 0.9f;
+                body->position += (body->velocity * _dt);
+                body->collider.center = body->position;
 
-                body.ClearForces();
-            }
-        }
-
-        /*// Move dynamic objects
-        for (auto& A : view)
-        {
-            auto& a = m_reg.get<PhysicsBody>(A);
-            if (a.type == PhysicsType::DYNAMIC)
-            {
-                if (a.hasGravity)
-                {
-                    a.ApplyForce(DOWN_NORM,
-                                 GRAVITY.y * a.mass);
-                }
-
-                a.velocity += (a.acceleration * _dt);
-
-                if (!a.onGround)
-                    a.velocity.x *= (1 - DAMPING_CONSTANT);
-                else
-                    a.velocity.x *= (1 - FRICTION_CONSTANT);
-
-                a.position += ((a.velocity) * _dt);
-
-                a.collider.center = a.position;
-
-                a.ClearForces();
+                body->ClearForces();
             }
         }
 
         // Check collisions
-        for (auto& other : view) {
-            if (other == m_player->ID) continue;
-            auto& otherP = m_reg.get<PhysicsBody>(other);
+        for (auto B : m_bodyList)
+        {
+            if (B->ID == m_player->m_physComponent->ID) continue;
             CheckCollision(*m_player->m_physComponent,
-                           otherP);
-        }*/
+                           *B);
+        }
     }
 
     // Utility functions
     void PhysicsManager::CheckCollision(PhysicsBody &A, PhysicsBody &B) {
-        if ( std::abs(A.collider.center.x - B.collider.center.x) >= A.collider.halfSize.x + B.collider.halfSize.x ) return;
-        if ( std::abs(A.collider.center.y - B.collider.center.y) >= A.collider.halfSize.y + B.collider.halfSize.y ) return;
+        if ( std::abs(A.collider.center.x - B.collider.center.x) > A.collider.halfSize.x + B.collider.halfSize.x ) return;
+        if ( std::abs(A.collider.center.y - B.collider.center.y) > A.collider.halfSize.y + B.collider.halfSize.y ) return;
 
         ResolveCollision(new Manifold{
                 A, B,
@@ -121,7 +102,7 @@ namespace p2d
             else if (_manifold->A.position.x > _manifold->B.position.x)
             {
                 _manifold->A.position.x += _manifold->depth.x;
-                _manifold->A.collider.center.x += _manifold->depth.x;
+                _manifold->A.collider.center.x = _manifold->A.position.x;
                 _manifold->A.velocity.x = 0;
             }
         }

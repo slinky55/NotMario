@@ -3,29 +3,31 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <forward_list>
 
 #include "entt/entity/registry.hpp"
 
 #include "Entities/Player.h"
 #include "PhysicsBody.h"
 #include "Constants.h"
-#include "Utils/BodyAllocator.h"
+#include "Utils/PoolAllocator.h"
 
 namespace p2d
 {
     class PhysicsManager
     {
     public:
-        PhysicsManager(entt::registry &_reg,
-                       std::shared_ptr<Player> _player);
+        explicit PhysicsManager(std::shared_ptr<Player> _player);
+        ~PhysicsManager();
 
         PhysicsBody* Create();
         void Update(float _dt);
     private:
-        entt::registry& m_reg;
+        PoolAllocator m_allocator { 50 };
+        std::forward_list<PhysicsBody*> m_bodyList;
         std::shared_ptr<Player> m_player;
 
-        BodyAllocator m_bodyList {50};
+        std::size_t m_bodyCount {0};
 
         static void CheckCollision(PhysicsBody& A,
                                    PhysicsBody& B);

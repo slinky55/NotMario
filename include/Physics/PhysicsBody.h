@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "Math/Vector2.h"
 #include "AABB.h"
 
@@ -13,6 +15,8 @@ namespace p2d
 
     struct PhysicsBody
     {
+        uint32_t ID;
+
         Vector2 position,
                 velocity,
                 acceleration;

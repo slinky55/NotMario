@@ -58,4 +58,10 @@ namespace p2d
         y /= _scalar;
         return *this;
     }
+
+    bool Vector2::operator==(const Vector2 &_lhs) const
+    {
+        if ( x == _lhs.x && y == _lhs.y) return true;
+        return false;
+    }
 }

@@ -51,8 +51,7 @@ private:
     std::shared_ptr<RenderManager> m_renderer = std::make_shared<RenderManager>(m_reg,
                                                                                 m_window);
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
-    std::shared_ptr<p2d::PhysicsManager> m_physMgr = std::make_shared<p2d::PhysicsManager>(m_reg,
-                                                                                 m_player);
+    std::shared_ptr<p2d::PhysicsManager> m_physMgr = std::make_shared<p2d::PhysicsManager>(m_player);
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
 
     std::shared_ptr<Map> m_map = std::make_shared<Map>();
@@ -61,7 +60,7 @@ private:
     void LateUpdate();
 
     void CreatePlayer();
-    void CreateMapBlock(const sf::Vector2f& _pos,
+    std::shared_ptr<Block>& CreateMapBlock(const sf::Vector2f& _pos,
                         const sf::Vector2f& _size,
                         const sf::Color& _color);
     void LoadTestMap();
