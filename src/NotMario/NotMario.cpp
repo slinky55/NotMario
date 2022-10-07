@@ -1,28 +1,26 @@
 #include "NotMario/NotMario.h"
 
-#define DEBUG_DRAW
-
 void NotMario::OnInit()
 {
     // Load resources and check for errors
-//    if (!m_resources->LoadTexture("world_tiles",
-//                                  "../../../res/img/world.png"))
-//    {
-//        std::cout << "Failed to load world tiles\n";
-//        m_running = false; return;
-//    }
-//    if (!m_resources->LoadTexture("characters",
-//                                  "../res/img/characters.png"))
-//    {
-//        std::cout << "Failed to load player textures\n";
-//        m_running = false; return;
-//    }
-//    if (!m_resources->LoadTexture("background",
-//                                  "../res/img/bg.png"))
-//    {
-//        std::cout << "Failed to load background texture\n";
-//        m_running = false; return;
-//    }
+    if (!m_resources->LoadTexture("world_tiles",
+                                  "../../../res/img/world_scaled.png"))
+    {
+        std::cout << "Failed to load world tiles\n";
+        m_running = false; return;
+    }
+    if (!m_resources->LoadTexture("characters",
+                                  "../../../res/img/characters.png"))
+    {
+        std::cout << "Failed to load player textures\n";
+        m_running = false; return;
+    }
+    if (!m_resources->LoadTexture("background",
+                                  "../../../res/img/bg.png"))
+    {
+        std::cout << "Failed to load background texture\n";
+        m_running = false; return;
+    }
 
     // Create window and check for errors
     m_window.create( sf::VideoMode({800, 600}), "NotMario" );
@@ -59,7 +57,7 @@ void NotMario::Run()
 
         current = frameClock.getElapsedTime();
         fps = 1.0f / (current.asSeconds() - prev.asSeconds()); // the asSeconds returns a float
-        std::cout << "fps = " << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+        std::cout << "fps = " << std::floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
         prev = current;
     }
 }
@@ -88,28 +86,19 @@ void NotMario::Update()
 
 void NotMario::LateUpdate()
 {
-
-#ifdef DEBUG_DRAW
-    m_player->m_rectComponent->rect.setPosition( {((m_player->m_physComponent->position -
-                                                  m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
-                                                 ((m_player->m_physComponent->position -
-                                                   m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
-#else
-    m_player->m_spriteComponent->sprite.setPosition((m_player->m_physComponent->position -
-                                                     m_player->m_physComponent->halfSize) * PIXELS_PER_METER);
-#endif
+    m_player->m_spriteComponent->sprite.setPosition({((m_player->m_physComponent->position -
+                                                       m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
+                                                     ((m_player->m_physComponent->position -
+                                                       m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
 }
 
 void NotMario::CreatePlayer()
 {
     m_player->ID = m_entityMgr->Register();
 
-    m_player->m_rectComponent = &m_entityMgr->AddRectangleComponent(m_player->ID);
+    // Physics
     m_player->m_physComponent = m_physMgr->Create();
-    m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->ID);
-
     assert(m_player->m_physComponent);
-
     m_player->m_physComponent->position = { 200 / PIXELS_PER_METER, 200 / PIXELS_PER_METER};
     m_player->m_physComponent->halfSize = {16 / PIXELS_PER_METER, 16 / PIXELS_PER_METER};
     m_player->m_physComponent->collider = {
@@ -120,20 +109,20 @@ void NotMario::CreatePlayer()
     m_player->m_physComponent->type = p2d::PhysicsType::DYNAMIC;
     m_player->m_physComponent->hasGravity = true;
 
-#ifdef DEBUG_DRAW
-    m_player->m_rectComponent->rect.setSize({32, 32});
-    m_player->m_rectComponent->rect.setFillColor(sf::Color::White);
-    m_player->m_rectComponent->rect.setPosition( {((m_player->m_physComponent->position -
-                                                    m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
-                                                  ((m_player->m_physComponent->position -
-                                                    m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
-#else
-        m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
-        m_player->m_spriteComponent->sprite.setTextureRect({
-           {0, 2 * 32},
-           {32, 32}
-        });
-#endif
+    // Sprite
+    m_player->m_spriteComponent = &m_entityMgr->AddSpriteComponent(m_player->ID);
+    m_player->m_spriteComponent->sprite.setTexture(m_resources->GetTexture("characters"));
+    m_player->m_spriteComponent->sprite.setTextureRect({
+       {0, 2 * 32},
+       {16, 32}
+    });
+    m_player->m_spriteComponent->sprite.setPosition({((m_player->m_physComponent->position -
+                                                       m_player->m_physComponent->halfSize) * PIXELS_PER_METER).x,
+                                                     ((m_player->m_physComponent->position -
+                                                       m_player->m_physComponent->halfSize) * PIXELS_PER_METER).y});
+
+    // Input
+    m_player->m_inputComponent = &m_entityMgr->AddInputComponent(m_player->ID);
 }
 
 void NotMario::LoadTestMap()
