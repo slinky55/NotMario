@@ -41,7 +41,7 @@ namespace p2d
                                     GRAVITY.y * body->mass);
 
                 body->velocity += (body->acceleration * _dt);
-                body->velocity.x *= 0.9f;
+                body->velocity.x *= 0.8f;
                 body->position += (body->velocity * _dt);
                 body->collider.center = body->position;
 
@@ -60,8 +60,9 @@ namespace p2d
 
     // Utility functions
     void PhysicsManager::CheckCollision(PhysicsBody &A, PhysicsBody &B) {
-        if ( std::abs(A.collider.center.x - B.collider.center.x) > A.collider.halfSize.x + B.collider.halfSize.x ) return;
-        if ( std::abs(A.collider.center.y - B.collider.center.y) > A.collider.halfSize.y + B.collider.halfSize.y ) return;
+        if ( std::abs(A.collider.center.x - B.collider.center.x) > A.collider.halfSize.x + B.collider.halfSize.x  ||
+             std::abs(A.collider.center.y - B.collider.center.y) > A.collider.halfSize.y + B.collider.halfSize.y)
+            return;
 
         ResolveCollision(new Manifold{
                 A, B,
