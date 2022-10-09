@@ -7,3 +7,6 @@
 [submodule "3rdparty/corrade"]
 	path = 3rdparty/corrade
 	url = git@github.com:mosra/corrade.git
+[submodule "3rdparty/tinytmx"]
+	path = 3rdparty/tinytmx
+	url = https://github.com/KaseyJenkins/tinytmx

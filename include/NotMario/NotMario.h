@@ -7,6 +7,7 @@
 // 3rd party
 #include <SFML/Graphics.hpp>
 #include <entt/entity/registry.hpp>
+#include <tinytmx.hpp>
 
 // Managers
 #include "Managers/RenderManager.h"
@@ -39,6 +40,8 @@ private:
     bool m_running = false;
 
     entt::registry m_reg;
+    std::shared_ptr<tinytmx::Map> m_map;
+
     sf::RenderWindow m_window;
     sf::Clock time;
 
@@ -53,8 +56,6 @@ private:
     std::shared_ptr<EntityManager> m_entityMgr = std::make_shared<EntityManager>(m_reg);
     std::shared_ptr<p2d::PhysicsManager> m_physMgr = std::make_shared<p2d::PhysicsManager>(m_player);
     std::shared_ptr<InputManager> m_inputMgr = std::make_shared<InputManager>(m_reg);
-
-    std::shared_ptr<Map> m_map = std::make_shared<Map>();
 
     void Update();
     void LateUpdate();
