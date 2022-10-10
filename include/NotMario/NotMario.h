@@ -40,7 +40,7 @@ private:
     bool m_running = false;
 
     entt::registry m_reg;
-    std::shared_ptr<tinytmx::Map> m_map;
+    std::shared_ptr<tinytmx::Map> m_map = std::make_shared<tinytmx::Map>();
 
     sf::RenderWindow m_window;
     sf::Clock time;

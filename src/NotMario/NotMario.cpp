@@ -2,7 +2,7 @@
 
 void NotMario::OnInit()
 {
-    /*// Load resources and check for errors
+    // Load resources and check for errors
     if (!m_resources->LoadTexture("world_tiles",
                                   "../../../res/img/world_scaled.png"))
     {
@@ -20,7 +20,7 @@ void NotMario::OnInit()
     {
         std::cout << "Failed to load background texture\n";
         m_running = false; return;
-    }*/
+    }
 
     // Create window and check for errors
     m_window.create( sf::VideoMode({800, 600}), "NotMario" );
@@ -33,9 +33,8 @@ void NotMario::OnInit()
 
     //LoadTestMap();
 
-    /*m_map->ParseFile("../../../res/maps/TestScene_1.tmx");*/
-
-   /* const auto& layers = m_map->GetTileLayers();
+    m_map->ParseFile("../../../res/maps/TestScene_1.tmx");
+    const auto& layers = m_map->GetTileLayers();
     for (auto layer : layers)
     {
         auto& chunks = layer->GetChunks();
@@ -43,9 +42,9 @@ void NotMario::OnInit()
         {
             std::cout << chunk->GetWidth() << "\n";
         }
-    }*/
+    }
 
-    //CreatePlayer();
+    CreatePlayer();
 
     m_running = true;
 }

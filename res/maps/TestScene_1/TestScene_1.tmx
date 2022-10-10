@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="9">
- <tileset firstgid="1" source="../../../../TiledMaps/MarioTilesheet.tsx"/>
- <tileset firstgid="177" source="../../../../TiledMaps/Pipes.tsx"/>
- <tileset firstgid="179" source="../../../../TiledMaps/Cloud.tsx"/>
+ <tileset firstgid="1" source="MarioTilesheet.tsx"/>
+ <tileset firstgid="177" source="Pipes.tsx"/>
+ <tileset firstgid="179" source="Cloud.tsx"/>
  <layer id="2" name="Background" width="30" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
