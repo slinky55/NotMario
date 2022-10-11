@@ -11,11 +11,11 @@
 
 enum TileType
 {
-    TRANSPARENT = 0,
-    COIN_BLOCK_ACTIVE = 115,
-    FLOOR = 97,
-    PIPE_UP = 177,
-    BRICK = 99
+    TRANSPARENT = -1,
+    COIN_BLOCK_ACTIVE = 114,
+    FLOOR = 96,
+    PIPE_UP = 0,
+    BRICK = 97
 };
 
 struct TileProperties

@@ -12,7 +12,7 @@ RenderManager::RenderManager(entt::registry& _reg,
 
 void RenderManager::Draw()
 {
-    m_window.clear();
+    m_window.clear({135, 206, 235});
 
     // TODO: Get view of render-able entities, and call their draw method
     auto sprites = m_reg.view<SpriteC>();

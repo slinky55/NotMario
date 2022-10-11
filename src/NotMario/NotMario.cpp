@@ -17,7 +17,7 @@ void NotMario::OnInit()
     }
 
     // Create window and check for errors
-    m_window.create( sf::VideoMode({800, 600}), "NotMario" );
+    m_window.create( sf::VideoMode({800, 608}), "NotMario" );
     if (!m_window.isOpen())
     {
         std::cout << "Failed to create window\n";
@@ -165,7 +165,9 @@ void NotMario::LoadTestMap()
 void NotMario::LoadMap()
 {
 
-    std::fstream in {"../../../res/maps/TestScene_1/TestScene_1_1.map"};
+    std::fstream in {"../../../res/maps/TestScene_1/TestScene_1.map"};
+    if (!in.is_open())
+        std::cout << "Failed to open map file\n";
 
     std::vector<std::vector<int>> layer;
     std::string line, num;
@@ -214,19 +216,21 @@ void NotMario::LoadMap()
     {
         for (uint32_t col = 0; col < layer[row].size(); col++)
         {
-            if (layer[row][col] == 0) continue;
+            if (layer[row][col] == -1) continue;
             auto type = static_cast<TileType>(layer[row][col]);
             auto tile = m_entityMgr->Register();
             auto* phys = m_physMgr->Create();
 
-            phys->position = {
-                    (col * GRID_SIZE) / PIXELS_PER_METER,
-                    (row * GRID_SIZE) / PIXELS_PER_METER
-            };
             phys->halfSize = {
                     (m_tileset[type]->size.x / 2.f) / PIXELS_PER_METER,
                     (m_tileset[type]->size.y / 2.f) / PIXELS_PER_METER,
             };
+
+            phys->position = {
+                    ((col * GRID_SIZE) / PIXELS_PER_METER) + phys->halfSize.x,
+                    ((row * GRID_SIZE) / PIXELS_PER_METER) + phys->halfSize.y
+            };
+
             phys->collider = {
                     phys->position,
                     phys->halfSize
@@ -235,8 +239,9 @@ void NotMario::LoadMap()
             auto& sprite = m_entityMgr->AddSpriteComponent(tile);
             sprite.sprite.setTexture(m_tileset[type]->tex);
             sprite.sprite.setTextureRect(m_tileset[type]->rect);
-            sprite.sprite.setPosition( {((phys->position.x - phys->halfSize.x) * PIXELS_PER_METER),
-                                        ((phys->position.y - phys->halfSize.y) * PIXELS_PER_METER)} );
+            /*sprite.sprite.setPosition( {((phys->position.x - phys->halfSize.x) * PIXELS_PER_METER),
+                                        ((phys->position.y - phys->halfSize.y) * PIXELS_PER_METER)} );*/
+            sprite.sprite.setPosition({col * 32.f, row * 32.f});
         }
     }
 }
