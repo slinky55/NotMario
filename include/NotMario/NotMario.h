@@ -3,11 +3,13 @@
 // std
 #include <iostream>
 #include <memory>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 // 3rd party
 #include <SFML/Graphics.hpp>
 #include <entt/entity/registry.hpp>
-#include <tinytmx.hpp>
 
 // Managers
 #include "Managers/RenderManager.h"
@@ -27,6 +29,8 @@
 constexpr float MAP_WIDTH = 50.f;
 constexpr float MAP_HEIGHT = 38.f;
 
+constexpr float GRID_SIZE = 32.f;
+
 class NotMario
 {
 public:
@@ -40,7 +44,7 @@ private:
     bool m_running = false;
 
     entt::registry m_reg;
-    std::shared_ptr<tinytmx::Map> m_map = std::make_shared<tinytmx::Map>();
+    std::shared_ptr<Map> m_map = std::make_shared<Map>();
 
     sf::RenderWindow m_window;
     sf::Clock time;
@@ -61,8 +65,12 @@ private:
     void LateUpdate();
 
     void CreatePlayer();
-    std::shared_ptr<Block>& CreateMapBlock(const sf::Vector2f& _pos,
+    void CreateMapBlock(const sf::Vector2f& _pos,
                         const sf::Vector2f& _size,
                         const sf::Color& _color);
+
+    TileSet m_tileset;
+
+    void LoadMap();
     void LoadTestMap();
 };
