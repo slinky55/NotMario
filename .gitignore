@@ -2,3 +2,6 @@ build-debug/*
 build-release/*
 .idea/*
 .vs/*
+
+Platformer2D/*
+NotMario/*
