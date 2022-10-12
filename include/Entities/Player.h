@@ -14,4 +14,5 @@ struct Player
     p2d::PhysicsBody* m_physComponent;
     InputC* m_inputComponent;
     RectangleC* m_rectComponent;
+    AnimationC* m_animComponent;
 };

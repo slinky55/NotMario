@@ -25,6 +25,7 @@ public:
     SpriteC& AddSpriteComponent(entt::entity& _ent);
     p2d::PhysicsBody& AddPhysicsComponent(entt::entity& _ent);
     InputC& AddInputComponent(entt::entity& _ent);
+    AnimationC& AddAnimationComponent(entt::entity& _ent);
 
 private:
     entt::registry& m_reg;

@@ -11,7 +11,7 @@ class Scene
 public:
     Scene(EntityManager& _entityMgr,
           InputManager& _inputMgr,
-          PhysicsManager& _physicsMgr,
+          p2d::PhysicsManager& _physicsMgr,
           RenderManager& _renderMgr,
           ResourceManager& _resourceMgr);
 
@@ -23,7 +23,7 @@ public:
 private:
     EntityManager& m_entityMgr;
     InputManager& m_inputMgr;
-    PhysicsManager& m_physicsMgr;
+    p2d::PhysicsManager& m_physicsMgr;
     RenderManager& m_renderMgr;
     ResourceManager& m_resourceMgr;
 };

@@ -31,6 +31,11 @@ InputC& EntityManager::AddInputComponent(entt::entity& _ent)
     return m_reg.emplace<InputC>(_ent);
 }
 
+AnimationC& EntityManager::AddAnimationComponent(entt::entity &_ent)
+{
+    return m_reg.emplace<AnimationC>(_ent);
+}
+
 entt::entity EntityManager::CreateBlock(const sf::Vector2f &_pos,
                                         const sf::Vector2f &_size,
                                         const sf::Color &_color)
